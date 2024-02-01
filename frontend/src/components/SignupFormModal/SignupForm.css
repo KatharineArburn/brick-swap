@@ -1,0 +1,20 @@
+html {
+    font-family: sans-serif;
+}
+
+html, body, h1, h2, h3, h4, h5, h6, main, nav, div, ul, li {
+    margin: 5px;
+    padding: 0;
+}
+
+input {
+    box-sizing: border-box;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    margin: 20px;
+
+}
