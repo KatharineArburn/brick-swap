@@ -4,19 +4,24 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class MessageStatus extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      MessageStatus.belongsTo(models.Message, {foreignKey: 'messageId'})
+      MessageStatus.belongsTo(models.User, {foreignKey: 'userId'})
     }
   }
   MessageStatus.init({
-    messageId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
-    isRead: DataTypes.BOOLEAN
+    messageId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    userId:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    isRead: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'MessageStatus',

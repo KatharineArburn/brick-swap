@@ -1,27 +1,74 @@
 'use strict';
 const {
-  Model
+  Model, Validator
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Lego extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Lego.belongsTo(models.User, {foreignKey: 'userId'});
+      Lego.hasMany(models.Wishlist, {foreignKey: 'legoId'})
+      Lego.belongsToMany(models.Tag,
+        {through: models.LegoTag,
+          foreignKey: 'legoId',
+          otherKey: 'tagId'
+        });
     }
   }
   Lego.init({
-    userId: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    itemNumber: DataTypes.INTEGER,
-    pieces: DataTypes.INTEGER,
-    ages: DataTypes.STRING,
-    theme: DataTypes.STRING,
-    status: DataTypes.STRING,
-    image: DataTypes.STRING
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    itemNumber: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    pieces: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        // isNumeric: true,
+        notEmpty: true
+      }
+    },
+    ages: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    theme: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Lego',
