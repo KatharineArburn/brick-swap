@@ -7,11 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Lego.belongsTo(models.User, {foreignKey: 'userId'});
       Lego.hasMany(models.Wishlist, {foreignKey: 'legoId'})
-      Lego.belongsToMany(models.Tag,
-        {through: models.LegoTag,
-          foreignKey: 'legoId',
-          otherKey: 'tagId'
-        });
+      Lego.hasMany(models.Tag, {foreignKey: 'legoId'});
     }
   }
   Lego.init({

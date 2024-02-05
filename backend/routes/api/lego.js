@@ -1,18 +1,18 @@
 const router = require('express').Router();
 
 const { requireAuth } = require('../../utils/auth');
-const { User, Lego, Tag, LegoTag, Message, Wishlist, Follow, sequelize } = require('../../db/models');
+const { User, Lego, Tag, Message, Wishlist, Follow, sequelize } = require('../../db/models');
 const { Op } = require('sequelize');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-
+// Get all lego sets - Landing Page
 router.get('/', async (req, res, next) => {
 
     const lego = await Lego.findAll({
         include: {
-            model: Lego,
+            model: Tag,
             attributes: []
         },
         attributes: [
@@ -35,7 +35,8 @@ router.get('/', async (req, res, next) => {
 
 });
 
-router.get(':legoId', async (req, res) => {
+// Get lego set details
+router.get('/:legoId', async (req, res) => {
     const { legoId } = req.params;
 
     const lego = await Lego.findByPk( legoId, {
@@ -47,7 +48,7 @@ router.get(':legoId', async (req, res) => {
             {
                 model: Tag,
                 attributes: ['id', 'name']
-            }
+            },
         ]
     });
 
@@ -70,7 +71,7 @@ router.get(':legoId', async (req, res) => {
             updatedAt: lego.updatedAt
         }
 
-        data.User = lego.User
+        data.User = lego.User,
         data.Tag = lego.Tag
 
         return res.json(data)
@@ -98,7 +99,8 @@ const validateLegoSet = [
     handleValidationErrors
 ]
 
-router.post('/', requireAuth, async (req, res, next) => {
+// Create new Lego set
+router.post('/', requireAuth, validateLegoSet, async (req, res, next) => {
     const userId = req.user.id;
     const {name, itemNumber, pieces, ages, theme, image} = req.body
 
@@ -118,6 +120,7 @@ router.post('/', requireAuth, async (req, res, next) => {
     res.json(newLego)
 });
 
+// Update Lego set
 router.put('/:legoId', requireAuth, validateLegoSet, async (req, res, next) => {
     const { legoId } = req.params;
 
@@ -151,6 +154,7 @@ router.put('/:legoId', requireAuth, validateLegoSet, async (req, res, next) => {
     }
 })
 
+// Delete a lego set
 router.delete('/:legoId', requireAuth, async (req, res, next) => {
 
     const { legoId } = req.params;
@@ -174,3 +178,65 @@ router.delete('/:legoId', requireAuth, async (req, res, next) => {
         })
     }
 })
+
+// Get lego tags
+router.get('/:legoId/tags', async (req, res) => {
+    const { legoId } = req.params
+
+    const existingLego = await Lego.findByPk(legoId)
+
+    if(!existingLego) {
+        return res.status(404).json({
+            message: "Lego Set couldn't be found",
+        });
+    } else {
+        const legoTags = await Tag.findAll({
+            where: { legoId: legoId},
+        })
+
+        return res.json({Tags: legoTags})
+    }
+})
+
+const validateTags = [
+    check ('name')
+        .exists({checkFalsy: true})
+        .notEmpty()
+        .withMessage('Tag text is required'),
+    handleValidationErrors
+]
+
+// Create lego tags
+router.post('/:legoId/tags', requireAuth, validateTags, async (req, res, next) => {
+
+    const { legoId } = req.params
+    // const userId = req.user.id
+    const { name } = req.body
+
+    const existingLego = await Lego.findByPk(legoId)
+
+    if(!existingLego) {
+        return res.status(404).json({
+            message: "Lego Set couldn't be found",
+        });
+    }
+
+    const existingTag = await Tag.findAll({ where: { name, legoId }})
+
+    if (existingTag.length >= 1) {
+        return res.status(500).json({
+            message: "Tag already exists for this lego set"
+        });
+    } else {
+        const newTag = await Tag.create({
+            name
+        })
+
+        res.status(201)
+        return res.json(newTag)
+    }
+})
+
+// Update lego tag
+
+module.exports = router

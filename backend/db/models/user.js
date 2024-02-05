@@ -9,8 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Message, {foreignKey: 'recipientId'})
       User.hasMany(models.MessageStatus, {foreignKey: 'userId'})
       User.hasMany(models.Wishlist, {foreignKey: 'userId'})
-      User.hasMany(models.Follow, {foreignKey: 'followingUserId'})
-      User.hasMany(models.Follow, {foreignKey: 'followedUserId'})
+      User.hasMany(models.Tag, {foreignKey: 'userId'})
     }
   };
 
