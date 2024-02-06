@@ -11,13 +11,19 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await Tag.bulkCreate([
       {
-        name: 'vehicles'
+        name: 'vehicles',
+        userId: 3,
+        legoId: 3
       },
       {
-        name: 'buildings'
+        name: 'buildings',
+        userId: 2,
+        legoId: 2
       },
       {
-        name: 'fantasy'
+        name: 'fantasy',
+        userId: 2,
+        legoId: 2
       }
     ], { validate: true})
   },

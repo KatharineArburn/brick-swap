@@ -5,12 +5,8 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Tag extends Model {
     static associate(models) {
-      Tag.belongsToMany(
-        models.Lego,
-        {through: models.LegoTag,
-          foreignKey: 'tagId',
-          otherKey: 'legoId'
-        });
+      Tag.belongsTo( models.User,{foreignKey:'userId'});
+      Tag.belongsTo( models.Lego,{foreignKey:'legoId'});
     }
   }
   Tag.init({
@@ -20,7 +16,15 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: true
       }
-    }
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    legoId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Tag',

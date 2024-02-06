@@ -18,6 +18,24 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: "CASCADE"
+      },
+      legoId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Legos',
+          key: 'id'
+        },
+        onDelete: "CASCADE"
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

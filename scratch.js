@@ -13,6 +13,9 @@
 // npx sequelize model:generate --name Wishlist --attributes userId:integer,legoId:integer
 // npx sequelize model:generate --name Follow --attributes followingUserId:integer,followedUserId:integer
 
+// npx sequelize migration:generate --name add-legoId-to-Tag
+// npx sequelize migration:generate --name add-userId-to-Tag
+
 
 
 // npx sequelize seed:generate --name lego-seeders
