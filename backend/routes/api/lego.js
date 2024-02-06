@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { requireAuth } = require('../../utils/auth');
-const { User, Lego, Tag, Message, Wishlist, sequelize } = require('../../db/models');
+const { User, Lego, Tag, sequelize } = require('../../db/models');
 const { Op } = require('sequelize');
 
 const { check } = require('express-validator');
