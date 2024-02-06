@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { requireAuth } = require('../../utils/auth');
-const { User, Lego, Tag, Message, Wishlist, Follow, sequelize } = require('../../db/models');
+const { User, Lego, Tag, Message, Wishlist, sequelize } = require('../../db/models');
 const { Op } = require('sequelize');
 
 const { check } = require('express-validator');
@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
     const lego = await Lego.findAll({
         include: {
             model: Tag,
-            attributes: []
+            attributes: ['id', 'name', 'userId', 'legoId']
         },
         attributes: [
             "id",
@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
         ],
         group: ['Lego.id']
     });
-
+    // console.log("LEGO", lego)
     return res.json({Lego: lego});
 
 });
@@ -41,14 +41,15 @@ router.get('/:legoId', async (req, res) => {
 
     const lego = await Lego.findByPk( legoId, {
         include: [
+            // {
+            //     model: Tag,
+            //     attributes: ['id', 'name', 'userId', 'legoId'],
+            // },
             {
                 model: User,
-                attributes: ['id', 'firstName', 'lastName']
-            },
-            {
-                model: Tag,
-                attributes: ['id', 'name']
-            },
+                attributes: ['id', 'firstName', 'lastName'],
+                include:[Tag]
+            }
         ]
     });
 
@@ -71,9 +72,9 @@ router.get('/:legoId', async (req, res) => {
             updatedAt: lego.updatedAt
         }
 
-        data.User = lego.User,
-        data.Tag = lego.Tag
-
+        data.User = lego.User
+        // data.Tag = lego.Tag
+        // console.log("DATA", data)
         return res.json(data)
     }
 
@@ -102,10 +103,9 @@ const validateLegoSet = [
 // Create new Lego set
 router.post('/', requireAuth, validateLegoSet, async (req, res, next) => {
     const userId = req.user.id;
-    const {name, itemNumber, pieces, ages, theme, image} = req.body
+    const {name, itemNumber, pieces, ages, theme, status, image} = req.body
 
     const newLego = await Lego.create({
-        id,
         userId,
         name,
         itemNumber,
