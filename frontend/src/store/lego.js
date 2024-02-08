@@ -6,10 +6,10 @@ export const CREATE_LEGO = "lego/CREATE_LEGO";
 export const UPDATE_LEGO = "lego/UPDATE_LEGO";
 export const REMOVE_LEGO = "lego/REMOVE_LEGO";
 
-export const loadLego = (lego, userId) => ({
+export const loadLego = (lego) => ({
     type: LOAD_LEGO,
-    lego,
-    userId
+    lego: lego,
+    // userId
 });
 
 export const legoDetails = (lego) => ({
@@ -22,7 +22,7 @@ export const editLego = (lego) => ({
     lego
 });
 
-export const removeLego = (legoId) = ({
+export const removeLego = (legoId) => ({
     type: REMOVE_LEGO,
     legoId
 });
@@ -38,7 +38,7 @@ export const getAllLego = () => async (dispatch) => {
     return res
 }
 
-export const deleteLego = (legoId) = async (dispatch) => {
+export const deleteLego = (legoId) => async (dispatch) => {
     const res = await csrfFetch(`/api/lego/${legoId}`, {
         method: "DELETE"
     })

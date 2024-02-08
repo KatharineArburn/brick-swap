@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { deleteLego } from "../../store/spots";
+import { deleteLego } from "../../store/lego";
 import { useModal } from "../../context/Modal";
 import "./DeleteLego.css"
 
@@ -8,6 +8,8 @@ function DeleteLegoModal({legoId}) {
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal();
+
+    console.log("LEGOOOOOO", legoId)
 
     const handleDelete = (e) => {
         e.preventDefault();

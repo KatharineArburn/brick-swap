@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getLegoDetails } from "../../store/lego";
+import { getLegoDetails } from "../../../store/lego";
 import { useEffect } from "react";
 import LegoForm from "./LegoForm";
 
@@ -18,7 +18,7 @@ const EditLegoForm = () => {
     return (
         Object.keys(lego).length > 1 && (
             <>
-                <LegoForm lego={Lego} formType="Update Lego Set" />
+                <LegoForm lego={lego} formType="Update Lego Set" />
             </>
         )
     );

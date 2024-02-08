@@ -14,4 +14,4 @@ const CreateLegoForm = () => {
     return <LegoForm lego={lego} formType="Add Lego"/>
 }
 
-export default CreateLegoFrom
+export default CreateLegoForm

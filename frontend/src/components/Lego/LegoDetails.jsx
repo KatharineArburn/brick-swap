@@ -40,6 +40,14 @@ const LegoDetails = () => {
     return (
         <section className="page">
             <h2>{name}</h2>
+            <div>
+                <img className="image" alt="image" src={image}/>
+                <p>Item Number: {itemNumber}</p>
+                <p>Piece Count: {pieces}</p>
+                <p>Suggested Age: {ages}</p>
+                <p>Set Theme: {theme}</p>
+                <p>Status: {status}</p>
+            </div>
         </section>
     )
 }

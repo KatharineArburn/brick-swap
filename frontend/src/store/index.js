@@ -2,10 +2,12 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import legoReducer from "./lego";
+import tagReducer from "./tags";
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     lego: legoReducer,
+    tag: tagReducer
 });
 
 let enhancer;

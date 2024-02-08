@@ -5,6 +5,8 @@ import * as sessionActions from './store/session';
 import Navigation from './components/Navigation/Navigation';
 import LegoList from './components/Lego/LegoList';
 import LegoDetails from './components/Lego/LegoDetails';
+import CreateLegoForm from './components/Lego/LegoForms/CreateLegoForm';
+import UpdateLegoForm from './components/Lego/LegoForms/UpdateLegoForm'
 
 function App() {
   const dispatch = useDispatch();
@@ -20,10 +22,10 @@ function App() {
       {isLoaded &&
       <Switch>
         <Route exact path="/" component={LegoList} />
-        {/* <Route path='/spots/new' component={CreateSpotForm} /> */}
+        <Route path='/lego/new' component={CreateLegoForm} />
         {/* <Route path="/spots/current" component={ManageSpots} /> */}
         <Route exact path="/lego/:legoId" component={LegoDetails} />
-        {/* <Route exact path='/spots/:spotId/edit' component={EditSpotForm} /> */}
+        <Route exact path='/lego/:legoId/edit' component={UpdateLegoForm} />
       </Switch>
       }
     </>

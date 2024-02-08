@@ -9,7 +9,8 @@ const LegoList = () => {
 
     const dispatch = useDispatch()
     const lego = useSelector((state) => {
-        console.log("STATE", state)
+        // console.log("STATE", state)
+        return state.lego
     })
     useEffect(() => {
         dispatch(getAllLego());
