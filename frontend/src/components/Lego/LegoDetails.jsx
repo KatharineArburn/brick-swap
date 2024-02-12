@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLegoDetails } from "../../store/lego";
+import Tags from "../Tags/tags"
 import "./LegoDetails.css"
 
 const LegoDetails = () => {
@@ -48,6 +49,7 @@ const LegoDetails = () => {
                 <p>Set Theme: {theme}</p>
                 <p>Status: {status}</p>
             </div>
+            <Tags />
         </section>
     )
 }
