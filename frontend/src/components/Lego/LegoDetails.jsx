@@ -10,7 +10,7 @@ const LegoDetails = () => {
     const { legoId } = useParams();
 
     const lego = useSelector((state) => {
-        console.log("STATE", state.lego)
+        // console.log("STATE", state.lego)
         return state.lego
     })
 
@@ -48,6 +48,11 @@ const LegoDetails = () => {
                 <p>Suggested Age: {ages}</p>
                 <p>Set Theme: {theme}</p>
                 <p>Status: {status}</p>
+            </div>
+            <div>
+            <p>{firstName} {lastName}</p>
+            <p>City, State</p>
+            <button onClick={()=>{alert('Feature coming soon...'); }}>Add to Wishlist</button>
             </div>
             <Tags />
         </section>

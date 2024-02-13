@@ -16,7 +16,6 @@ function TagFormModal({legoId}) {
         }
     }, [reload])
 
-
     return ( <TagForm /> )
 
 }

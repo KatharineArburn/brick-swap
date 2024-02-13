@@ -11,17 +11,29 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await Tag.bulkCreate([
       {
-        name: 'vehicles',
+        tag0: 'vehicles',
+        tag1: 'John Deer',
+        tag2: null,
+        tag3: null,
+        tag4: null,
         userId: 3,
         legoId: 3
       },
       {
-        name: 'buildings',
-        userId: 2,
-        legoId: 2
+        tag0: 'pictures',
+        tag1: 'Old School',
+        tag2: 'polaroid',
+        tag3: null,
+        tag4: null,
+        userId: 1,
+        legoId: 1
       },
       {
-        name: 'fantasy',
+        tag0: 'fantasy',
+        tag1: 'buildings',
+        tag2: 'Disney',
+        tag3: null,
+        tag4: null,
         userId: 2,
         legoId: 2
       }
@@ -32,7 +44,7 @@ module.exports = {
     options.tableName = 'Tags';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['vehicles', 'buildings', 'fantasy'] }
+      name: { [Op.in]: ['vehicles', 'pictures', 'fantasy'] }
     }, {});
   }
 };

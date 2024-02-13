@@ -1,28 +1,31 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useModal } from "../../../context/Modal";
 import { createTag, updateTag } from "../../../store/tags";
 
-const TagForm = ({ tag, formType}) => {
+const TagForm = ({ tags, formType}) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const { closeModal } = useModal();
     const [errors, setErrors] = useState({})
-    const [tag0, setTag0] = useState(tag?.tag0);
-    const [tag1, setTag1] = useState(tag?.tag1);
-    const [tag2, setTag2] = useState(tag?.tag2);
-    const [tag3, setTag3] = useState(tag?.tag3);
-    const [tag4, setTag4] = useState(tag?.tag4);
+    const [tag0, setTag0] = useState(tags?.tag0);
+    const [tag1, setTag1] = useState(tags?.tag1);
+    const [tag2, setTag2] = useState(tags?.tag2);
+    const [tag3, setTag3] = useState(tags?.tag3);
+    const [tag4, setTag4] = useState(tags?.tag4);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
-        tag = { ...tag, tag0, tag1, tag2, tag3, tag4}
+        tags = { ...tags, tag0, tag1, tag2, tag3, tag4}
 
         let newTag;
 
         if (formType === "Add Tags") {
             try {
-                newTag = await dispatch(createTag(tag))
+                newTag = await dispatch(createTag(tags))
+                .then(closeModal)
             } catch (res) {
                 if (newTag && newTag.errors) {
                     setErrors(newTag.errors)
@@ -30,7 +33,8 @@ const TagForm = ({ tag, formType}) => {
             }
         } else if (formType === "Update Tags") {
             try {
-                newTag = await dispatch(updateTag(tag))
+                newTag = await dispatch(updateTag(tags))
+                .then(closeModal)
             } catch (res) {
                 if (newTag && newTag.errors) {
                     setErrors(newTag.errors)
@@ -96,7 +100,7 @@ const TagForm = ({ tag, formType}) => {
             <div className="errors">{errors.tag4}</div>
             </label>
             <div className="btn">
-            <button type="submit" className="submit-btn">{formType}</button>
+            <button type="submit" className="submit-btn">{header}</button>
             </div>
         </form>
     )
