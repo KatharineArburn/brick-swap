@@ -6,10 +6,10 @@ export const CREATE_LEGO = "lego/CREATE_LEGO";
 export const UPDATE_LEGO = "lego/UPDATE_LEGO";
 export const REMOVE_LEGO = "lego/REMOVE_LEGO";
 
-export const loadLego = (lego) => ({
+export const loadLego = (lego, userId) => ({
     type: LOAD_LEGO,
     lego: lego,
-    // userId
+    userId
 });
 
 export const legoDetails = (lego) => ({
