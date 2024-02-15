@@ -9,7 +9,7 @@ function DeleteLegoModal({legoId}) {
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal();
 
-    console.log("LEGOOOOOO", legoId)
+    // console.log("LEGOOOOOO", legoId)
 
     const handleDelete = (e) => {
         e.preventDefault();

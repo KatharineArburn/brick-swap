@@ -6,7 +6,8 @@ import Navigation from './components/Navigation/Navigation';
 import LegoList from './components/Lego/LegoList';
 import LegoDetails from './components/Lego/LegoDetails';
 import CreateLegoForm from './components/Lego/LegoForms/CreateLegoForm';
-import UpdateLegoForm from './components/Lego/LegoForms/UpdateLegoForm'
+import UpdateLegoForm from './components/Lego/LegoForms/UpdateLegoForm';
+import ProfilePage from './components/Profile/Profile';
 
 function App() {
   const dispatch = useDispatch();
@@ -23,9 +24,10 @@ function App() {
       <Switch>
         <Route exact path="/" component={LegoList} />
         <Route path='/lego/new' component={CreateLegoForm} />
-        {/* <Route path="/spots/current" component={ManageSpots} /> */}
         <Route exact path="/lego/:legoId" component={LegoDetails} />
         <Route exact path='/lego/:legoId/edit' component={UpdateLegoForm} />
+        <Route path="/profile/:userId" component={ProfilePage} />
+        <Route><h1>Page Not Found</h1></Route>
       </Switch>
       }
     </>
