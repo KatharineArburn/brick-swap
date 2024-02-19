@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { getAllTags } from "../../store/tags"
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem"
-import TagFormModal from "./TagFormModal"
+import UpdateTagForm from "./TagForms/UpdateTagModal"
+// import TagFormModal from "./TagForms/TagFormModal"
+// import TagForm from "./TagForms/TagForm"
 import "./Tags.css"
 
 const Tags = () => {
@@ -14,9 +16,10 @@ const Tags = () => {
         return state.session.user
     })
 
-    const tags = useSelector((state) => {
-        return state.tag[legoId]
-    })
+    const tags = Object.values(useSelector((state) => {
+        // console.log("STATE", state.lego.User.Tags)
+        return state.lego.User.Tags
+    }))
 
     const lego = useSelector((state) => {
         return state.lego
@@ -27,7 +30,6 @@ const Tags = () => {
     useEffect(() => {
         dispatch(getAllTags(legoId))
         .then(() => setIsLoading(true))
-        // setReviews(fetchedReviews.reverse())
     }, [dispatch, legoId])
 
     if (!isLoading) return <h1>Loading...</h1>
@@ -38,21 +40,32 @@ const Tags = () => {
 
     return (
         <>
-        { loggedIn && noTags && !notUserSet &&
+        {/* { loggedIn && noTags && !notUserSet &&
         (<OpenModalMenuItem
             itemText="Add tags to this set"
-            modalComponent={<TagFormModal legoId={legoId} />}/>)}
+            modalComponent={<TagForm legoId={legoId} />}/>)} */}
         <div className="tag-list">
-            {Object.values(tags).map((tag) => (
-                <div key={tag.id}>
+            {tags.map((tag) => (
+                <div key={'Tag' + tag.id}>
                     <p>{tag.tag0} {tag.tag1} {tag.tag2} {tag.tag3} {tag.tag4}</p>
+                { loggedIn && !noTags && notUserSet && (
+                <OpenModalMenuItem
+                itemText="Update tags"
+                modalComponent={
+                <UpdateTagForm
+                legoId={legoId}
+                tagA={tag.tag0}
+                tagB={tag.tag1}
+                tagC={tag.tag2}
+                tagD={tag.tag3}
+                tagE={tag.tag4}
+                tagId={tag.id}
+                            />}
+                        />
+                    )}
                 </div>
             ))}
-            </div>
-            { loggedIn && !noTags && notUserSet &&
-        (<OpenModalMenuItem
-            itemText="Update tags"
-            modalComponent={<TagFormModal legoId={legoId} />}/>)}
+        </div>
         </>
     )
 }

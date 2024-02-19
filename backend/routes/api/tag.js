@@ -2,7 +2,6 @@ const router = require('express').Router();
 
 const { requireAuth } = require('../../utils/auth');
 const { User, Lego, Tag, sequelize } = require('../../db/models');
-const { Op } = require('sequelize');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -18,12 +17,13 @@ const validateTags = [
 
 // Update tags
 router.put('/:tagId', requireAuth, validateTags, async (req, res, next) => {
-    const userId = req.user.userId
+    const userId = req.user.id
     const { tagId } = req.params;
 
-    const { tag0, tag1, tag2, tag3, tag4 } = req.body;
+    const { legoId, tag0, tag1, tag2, tag3, tag4 } = req.body;
 
     const existingTag = await Tag.findByPk(tagId)
+    console.log("EXISTING TAG", existingTag)
     const currentTag = await Tag.findAll({where: {id: tagId, userId}})
 
     if (!existingTag) {
@@ -39,6 +39,7 @@ router.put('/:tagId', requireAuth, validateTags, async (req, res, next) => {
     } else if (currentTag) {
         const updatedTag = await Tag.findByPk(tagId);
 
+        updatedTag.legoId = legoId;
         updatedTag.tag0 = tag0;
         updatedTag.tag1 = tag1;
         updatedTag.tag2 = tag2;
@@ -54,7 +55,7 @@ router.put('/:tagId', requireAuth, validateTags, async (req, res, next) => {
 // Delete Tags
 
 router.delete('/:tagId', requireAuth, async (req, res, next) => {
-    const userId = req.user.userId
+    const userId = req.user.id
     const { tagId } = req.params;
 
     const existingTag = await Tag.findByPk(tagId)
