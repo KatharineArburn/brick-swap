@@ -16,20 +16,17 @@ const LegoForm = ({ lego, formType}) => {
     const [status, setStatus] = useState(lego?.status);
     const [image, setImage] = useState(lego?.image);
 
-    // const [selectedAge, setSelectedAge] = useState("Please selected an age");
-    // const [selectedStatus, setSelectedStatus] = useState("Available")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors({});
+        // setErrors({});
         lego = { ...lego, name, itemNumber, pieces, ages, theme, status, image}
-
         let newLego;
 
         if (formType === "Add Lego") {
             try {
-                newLego = await dispatch(createLego(lego))
-                history.push(`/lego/${newLego.id}`)
+                newLego = await dispatch((createLego(lego)))
+                // .then((newLego) => history.push(`/lego/${newLego.lego.id}`))
             } catch (res) {
                 if (newLego && newLego.errors) {
                     setErrors(newLego.errors)
@@ -38,15 +35,15 @@ const LegoForm = ({ lego, formType}) => {
         } else if (formType === "Update Lego Set") {
             try {
                 newLego = await dispatch(updateLego(lego))
-                // console.log("NEWLEGO", newLego.id)
-                history.push(`/lego/${newLego.id}`)
+                // .then((newLego) => history.push(`/lego/${newLego.lego.id}`))
+                console.log("LEGO", newLego)
             } catch (res) {
                 if (newLego && newLego.errors) {
                     setErrors(newLego.errors)
                 }
             };
         }
-
+        history.push(`/lego/${newLego.id}`)
     }
 
     const header = formType === "Add Lego" ? "Add Lego" : "Update Lego Set"
@@ -113,16 +110,23 @@ const LegoForm = ({ lego, formType}) => {
                     />
             <div className="errors">{errors.theme}</div>
             </label>
-            <label>
-                Status of this set
-                <select
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}>
-                    <option value="available">Available</option>
-                    <option value="traded">Traded</option>
-                    </select>
+            <fieldset>
+                <legend>Is this set available for Trade?
+                    <div>
+                        <input type="radio" id="yes"
+                        name="status" value="yes"
+                        onChange={(e) => setStatus(e.target.value)}
+                        />
+                        <label htmlFor="yes">Yes</label>
+                        <input type="radio" id="no"
+                        name="status" value="no"
+                        onChange={(e) => setStatus(e.target.value)}
+                        />
+                        <label htmlFor="no">No</label>
+                    </div>
+                </legend>
             <div className="errors">{errors.status}</div>
-            </label>
+            </fieldset>
             <img className="image" id="image" alt='set_image' src={image}/>
             <label htmlFor="image" className="url">
                 <input

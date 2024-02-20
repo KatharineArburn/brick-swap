@@ -124,7 +124,7 @@ router.post('/', requireAuth, validateLegoSet, async (req, res, next) => {
 router.put('/:legoId', requireAuth, validateLegoSet, async (req, res, next) => {
     const { legoId } = req.params;
 
-    const {name, itemNumber, pieces, ages, theme, image} = req.body
+    const {name, itemNumber, pieces, ages, theme, status, image} = req.body
 
     const existingLego = await Lego.findByPk(legoId)
 
@@ -142,6 +142,7 @@ router.put('/:legoId', requireAuth, validateLegoSet, async (req, res, next) => {
         updatedLego.pieces = pieces;
         updatedLego.ages = ages;
         updatedLego.theme = theme;
+        updatedLego.status = status;
         updatedLego.image = image;
 
         await updatedLego.save()
@@ -209,9 +210,8 @@ const validateTags = [
 // Create lego tags
 router.post('/:legoId/tags', requireAuth, validateTags, async (req, res, next) => {
 
-    const { legoId } = req.params
     const userId = req.user.id
-    const { tag0, tag1, tag2, tag3, tag4 } = req.body
+    const { legoId, tag0, tag1, tag2, tag3, tag4 } = req.body
 
     const existingLego = await Lego.findByPk(legoId)
 
@@ -229,6 +229,8 @@ router.post('/:legoId/tags', requireAuth, validateTags, async (req, res, next) =
         });
     } else {
         const newTag = await Tag.create({
+            userId,
+            legoId,
             tag0,
             tag1,
             tag2,

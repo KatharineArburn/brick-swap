@@ -55,13 +55,13 @@ export const createTag = (payload) => async (dispatch) => {
 }
 
 export const updateTag = (payload, tagId) => async (dispatch) => {
-    console.log("PAYLOAD", payload)
+    // console.log("PAYLOAD", payload)
     const res = await csrfFetch(`/api/tag/${tagId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
     })
-    console.log(res)
+    // console.log(res)
     if (res.ok) {
         const data = await res.json();
         // console.log("DATA", data)

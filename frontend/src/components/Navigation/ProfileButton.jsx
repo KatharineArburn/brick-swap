@@ -57,7 +57,7 @@ return (
             <li>Hello {user.firstName}</li>
             <li>{user.email}</li>
             <li >
-                {/* <Link to='/spots/current' className="manage-spots">Manage Spots</Link> */}
+                <Link to={`/profile/${user.id}`} className="manage-profile">Profile Page</Link>
             </li>
             <li >
             <button className="logout" onClick={logout}>Log Out</button>

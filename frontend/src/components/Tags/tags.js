@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getAllTags } from "../../store/tags"
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem"
 import UpdateTagForm from "./TagForms/UpdateTagModal"
-// import TagFormModal from "./TagForms/TagFormModal"
-// import TagForm from "./TagForms/TagForm"
+import CreateTagForm from "./TagForms/CreateTagModal"
 import "./Tags.css"
 
 const Tags = () => {
@@ -22,8 +21,13 @@ const Tags = () => {
     }))
 
     const lego = useSelector((state) => {
+        // console.log("STATE", state.lego)
         return state.lego
     })
+
+    // const tagCheck = useSelector((state) => {
+    //     return state.tag[legoId]
+    // })
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -35,20 +39,23 @@ const Tags = () => {
     if (!isLoading) return <h1>Loading...</h1>
 
     const loggedIn = sessionUser ? true : null
-    const noTags = !loggedIn || !Object.values(tags).find((tag) => tag.userId === sessionUser.id)
-    const notUserSet = !loggedIn || !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
+    const noTags = tags.length ? true: false
+    const userSet = !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
+
+
 
     return (
         <>
-        {/* { loggedIn && noTags && !notUserSet &&
-        (<OpenModalMenuItem
+            <button hidden={(loggedIn && noTags && userSet)}>
+            <OpenModalMenuItem
             itemText="Add tags to this set"
-            modalComponent={<TagForm legoId={legoId} />}/>)} */}
+            modalComponent={<CreateTagForm legoId={legoId} />}/>
+                </button>
         <div className="tag-list">
             {tags.map((tag) => (
                 <div key={'Tag' + tag.id}>
                     <p>{tag.tag0} {tag.tag1} {tag.tag2} {tag.tag3} {tag.tag4}</p>
-                { loggedIn && !noTags && notUserSet && (
+                { loggedIn && !noTags && userSet && (
                 <OpenModalMenuItem
                 itemText="Update tags"
                 modalComponent={

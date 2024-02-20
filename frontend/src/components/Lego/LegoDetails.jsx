@@ -10,7 +10,7 @@ const LegoDetails = () => {
     const { legoId } = useParams();
 
     const lego = useSelector((state) => {
-        // console.log("STATE", state.lego)
+        console.log("STATE", state.lego)
         return state.lego
     })
 
@@ -32,7 +32,7 @@ const LegoDetails = () => {
         status,
         image,
     } = lego
-
+    console.log(lego)
     const {
         firstName,
         lastName

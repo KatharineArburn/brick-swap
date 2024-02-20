@@ -9,25 +9,24 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { closeModal } = useModal();
-
-    // let tags = useSelector((state) => {
-    //     console.log("TAGS STATE", state.tag[1][2])
-    //     return state.tag[legoId][tagId]
-    // })
+    const [reload, setReload] = useState(false);
     const [errors, setErrors] = useState({})
     const [tag0, setTag0] = useState(tagA);
     const [tag1, setTag1] = useState(tagB);
     const [tag2, setTag2] = useState(tagC);
     const [tag3, setTag3] = useState(tagD);
     const [tag4, setTag4] = useState(tagE);
-    // useEffect(() => {
-    //     dispatch(getAllTags(legoId));
-    // }, [dispatch, legoId])
 
-    // if (!tags) return <></>
+    useEffect(() => {
+        if (reload) {
+            window.location.reload();
+        }
+    }, [reload])
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        let updatedTags;
 
         const tagFormInfo = {
             "legoId": legoId,
@@ -39,12 +38,12 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
         }
 
         try {
-            const updatedTags = dispatch(updateTag(tagFormInfo, tagId))
-            // .then(() => closeModal())
+            updatedTags = dispatch(updateTag(tagFormInfo, tagId))
+            .then(() => closeModal())
             history.push(`/lego/${legoId}`)
-        } catch (rs) {
-            if (updateTag && updateTag.errors) {
-                setErrors(updateTag.errors)
+        } catch (res) {
+            if (updatedTags && updatedTags.errors) {
+                setErrors(updatedTags.errors)
             }
         }
 
