@@ -5,6 +5,7 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { GiHamburgerMenu } from "react-icons/gi";
 import './Navigation.css';
 
 
@@ -46,9 +47,9 @@ const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
 return (
     <>
-    <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-    </button>
+    <button onClick={openMenu} className="ham-btn">
+        <GiHamburgerMenu className='ham-icon'/>
+        </button>
     {showMenu &&
     <ul className={ulClassName} ref={ulRef}>
         {user ? (

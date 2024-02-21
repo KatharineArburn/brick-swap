@@ -40,13 +40,13 @@ const Tags = () => {
 
     const loggedIn = sessionUser ? true : null
     const noTags = tags.length ? true: false
-    const userSet = !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
+    const userSet = !loggedIn || !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
 
 
 
     return (
         <>
-            <button hidden={(loggedIn && noTags && userSet)}>
+            <button hidden={(loggedIn && noTags && userSet) || (!loggedIn)}>
             <OpenModalMenuItem
             itemText="Add tags to this set"
             modalComponent={<CreateTagForm legoId={legoId} />}/>

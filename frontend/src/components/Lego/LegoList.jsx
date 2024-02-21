@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { getAllLego } from "../../store/lego";
 import LegoListSearch from "./SearchBox/LegoListSearch";
-// import { FaStar } from "react-icons/fa"
 import "./LegoList.css"
 
 const LegoList = () => {
@@ -13,7 +12,6 @@ const LegoList = () => {
     })
 
     const legoArr = Object.values(lego)
-    console.log("STATE", legoArr)
     const [isLoaded, setIsLoaded] = useState(false);
     const [noResultsMessage, setNoResultsMessage] = useState('');
     const [delayedSearchTimeout, setDelayedSearchTimeout] = useState(null);
@@ -53,25 +51,22 @@ const LegoList = () => {
     return (
         <>
             <div className="lego-search-grid">
-            <p className="top-header">A place for families to come together and trade their LEGO sets.
-                <p>
+            <p className="top-header">A place for families to come together, track their LEGO library and trade their LEGO sets.
                 Join us to discover a whole new world of LEGO trading right in your neighborhood!
-                </p>
                 </p>
                 <LegoListSearch onSearch={handleSearchQuery}/>
             <div className="lego-list">
                 {isLoaded && legoArr.length ?
                 Object.values(lego).map((lego) => (
-                    <div className="lego-grid">
+                    <div>
                         <li key={lego.id} className="tooltip">
-                            <span className="tooltiptext">{lego.name}</span>
                             <Link to={`/lego/${lego.id}`}>
-                                <img src={`${lego.image}`} />
-                                <p>{lego.itemNumber}</p>
-                                <p>{lego.pieces}</p>
-                                <p>{lego.ages}</p>
-                                <p>{lego.theme}</p>
-                                <p>{lego.status}</p>
+                                <img src={`${lego.image}`} className="set-img"/>
+                                <div className="lego-grid">
+                                    <p className="grid1 name">{lego.name}</p>
+                                    <p className="grid1 pieces">{lego.pieces} pieces</p>
+                                    <p className="grid 2age">Suggested Age:{lego.ages}</p>
+                                </div>
                             </Link>
                         </li>
                     </div>

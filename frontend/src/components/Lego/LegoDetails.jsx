@@ -9,6 +9,10 @@ const LegoDetails = () => {
     const dispatch = useDispatch();
     const { legoId } = useParams();
 
+    const sessionUser = useSelector((state) => {
+        return state.session.user
+    })
+
     const lego = useSelector((state) => {
         console.log("STATE", state.lego)
         return state.lego
@@ -22,6 +26,10 @@ const LegoDetails = () => {
     }, [dispatch, legoId])
 
     if (!isLoading) return <h1>Loading...</h1>
+
+    const loggedIn = sessionUser ? true : null
+    const userSet = !loggedIn || !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
+
 
     const {
         name,
@@ -47,12 +55,14 @@ const LegoDetails = () => {
                 <p>Piece Count: {pieces}</p>
                 <p>Suggested Age: {ages}</p>
                 <p>Set Theme: {theme}</p>
-                <p>Status: {status}</p>
+                <p>Available for trade: {status}</p>
             </div>
             <div>
             <p>{firstName} {lastName}</p>
             <p>City, State</p>
-            <button onClick={()=>{alert('Feature coming soon...'); }}>Add to Wishlist</button>
+            <button
+            hidden={(loggedIn && userSet) || (!loggedIn)}
+            onClick={()=>{alert('Feature coming soon...'); }}>Add to Wishlist</button>
             </div>
             <Tags />
         </section>
