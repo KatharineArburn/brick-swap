@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createLego, updateLego } from "../../../store/lego";
@@ -7,7 +7,7 @@ import "./LegoForm.css"
 const LegoForm = ({ lego, formType}) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState({})
     const [name, setName] = useState(lego?.name);
     const [itemNumber, setItemNumber] = useState(lego?.itemNumber);
     const [pieces, setPieces] = useState(lego?.pieces);
@@ -29,24 +29,27 @@ const LegoForm = ({ lego, formType}) => {
         if (formType === "Add Lego") {
             try {
                 newLego = await dispatch((createLego(lego)))
+                history.push(`/lego/${newLego.id}`)
                 // .then((newLego) => history.push(`/lego/${newLego.lego.id}`))
+
             } catch (res) {
-                if (newLego && newLego.errors) {
-                    setErrors(newLego.errors)
+                const data = await res.json()
+                if (data && data.errors) {
+                    setErrors(data.errors)
                 }
             }
         } else if (formType === "Update Lego Set") {
             try {
                 newLego = await dispatch(updateLego(lego))
+                history.push(`/lego/${newLego.id}`)
                 // .then((newLego) => history.push(`/lego/${newLego.lego.id}`))
-                console.log("LEGO", newLego)
             } catch (res) {
-                if (newLego && newLego.errors) {
-                    setErrors(newLego.errors)
+                const data = await res.json()
+                if (data && data.errors) {
+                    setErrors(data.errors)
                 }
             };
         }
-        history.push(`/lego/${newLego.id}`)
     }
 
     const header = formType === "Add Lego" ? "Add Lego" : "Update Lego Set"
@@ -55,11 +58,6 @@ const LegoForm = ({ lego, formType}) => {
 
     return (
         <form onSubmit={handleSubmit} className="lego-form">
-            <ul>
-                {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-            ))}
-        </ul>
             <h1 className="formHeader">{header}</h1>
             <div className="container">
             <div className="grid1">

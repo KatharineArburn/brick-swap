@@ -9,7 +9,6 @@ import "./Tags.css"
 
 const Tags = () => {
     const dispatch = useDispatch();
-    const [reload, setReload] = useState(false);
     const { legoId } = useParams();
 
     const sessionUser = useSelector((state) => {
@@ -20,8 +19,9 @@ const Tags = () => {
         return state.lego.User.Tags
     }))
 
+    console.log('TAGS', tags)
+
     const lego = useSelector((state) => {
-        // console.log("STATE", state.lego)
         return state.lego
     })
 

@@ -33,8 +33,8 @@ const Sets = () => {
     const setGrid = Object.values(userSets).map(lego => {
         return (
             <div className="lego-list" key={lego.id}>
-                <div onClick={() => history.push(`/lego/${lego.id}`)}>
-                    <img src={lego.image} alt="lego set" className="set-image"/>
+                <div>
+                    <img onClick={() => history.push(`/lego/${lego.id}`)} src={lego.image} alt="lego set" className="set-image"/>
                     <div className="title-grid">
                         <p className="name">{lego.name} <br/> {lego.pieces} pieces</p>
                             <div className="lego-buttons">

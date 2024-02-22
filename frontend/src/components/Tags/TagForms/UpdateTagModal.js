@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { updateTag, deleteTag } from "../../../store/tags";
 
 
 const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const { closeModal } = useModal();
     const [reload, setReload] = useState(false);
     const [errors, setErrors] = useState({})
@@ -16,7 +14,7 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
     const [tag2, setTag2] = useState(tagC);
     const [tag3, setTag3] = useState(tagD);
     const [tag4, setTag4] = useState(tagE);
-
+    console.log(tagA, tagB, tagC, tagD, tagE, tagId)
     useEffect(() => {
         if (reload) {
             window.location.reload();
@@ -25,7 +23,7 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        setErrors({})
         let updatedTags;
 
         const tagFormInfo = {
@@ -42,6 +40,7 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
             .then(() => closeModal())
             .then(setReload(!reload))
             // history.push(`/lego/${legoId}`)
+            // console.log('UPDATED TAG', updateTag)
         } catch (res) {
             if (updatedTags && updatedTags.errors) {
                 setErrors(updatedTags.errors)
@@ -49,11 +48,13 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
         }
 
     }
+                console.log('UPDATED TAG', updateTag)
 
     const handelDelete = (e) => {
         e.preventDefault();
         dispatch(deleteTag(tagId))
             .then(() => closeModal())
+            .then(setReload(!reload))
     }
 
     return (

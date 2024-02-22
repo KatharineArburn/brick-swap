@@ -61,11 +61,13 @@ const LegoList = () => {
                     <div>
                         <li key={lego.id} className="tooltip">
                             <Link to={`/lego/${lego.id}`}>
-                                <img src={`${lego.image}`} className="set-img"/>
+                                <img src={`${lego.image}`} className="set-img" alt="Lego Set"/>
                                 <div className="lego-grid">
-                                    <p className="grid1 name">{lego.name}</p>
-                                    <p className="grid1 pieces">{lego.pieces} pieces</p>
-                                    <p className="grid 2age">Suggested Age:{lego.ages}</p>
+                                    <div className="grid1">
+                                    <p className="lego-name">{lego.name}</p>
+                                    <p className="lego-pieces">{lego.pieces} pieces</p>
+                                    </div>
+                                    <p className="grid2 age">Suggested Age:{lego.ages}</p>
                                 </div>
                             </Link>
                         </li>

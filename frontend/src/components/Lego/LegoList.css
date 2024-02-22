@@ -16,6 +16,7 @@
 }
 
 .lego-grid {
+    justify-content: start;
     display: grid;
     grid-gap: 2px 0px;
     grid-template-areas:
@@ -25,17 +26,34 @@
 
 .grid1 {
     grid-area: 1;
+    display: inline-flex;
+    align-content: space-between;
+    column-gap: 10px;
 }
 
 .name {
-    justify-self: start;
+    flex-basis: auto;
     grid-area: info;
+
+}
+
+.lego-name {
+    justify-self: start;
+    width: fit-content;
+    padding: 5px;
 
 }
 
 .pieces {
     justify-self: start;
     grid-area: info;
+
+}
+
+.lego-pieces {
+    justify-self: end;
+    width: fit-content;
+    padding: 5px;
 
 }
 

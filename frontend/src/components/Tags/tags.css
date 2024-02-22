@@ -6,13 +6,17 @@
     padding: 5px;
 }
 
+.tag:empty {
+    display: none;
+}
+
 .tag-list {
     display: flex;
     align-content: space-evenly;
     column-gap: 10px;
 }
 
-.tagbtn {
+.no-btn {
     margin-top: 5px;
     display: flex;
     align-items: center;
