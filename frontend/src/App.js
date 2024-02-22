@@ -8,6 +8,7 @@ import LegoDetails from './components/Lego/LegoDetails';
 import CreateLegoForm from './components/Lego/LegoForms/CreateLegoForm';
 import EdiLegoForm from './components/Lego/LegoForms/UpdateLegoForm';
 import ProfilePage from './components/Profile/Profile';
+import Tags from './components/Tags';
 
 function App() {
   const dispatch = useDispatch();
