@@ -1,0 +1,43 @@
+.yes-btn {
+    font-family: Montserrat;
+    width: 100px;
+    width: fit-content;
+    color: #FFFFFFFF;
+    background: #FF6026FF;
+    opacity: 1;
+    border: none;
+    border-radius: 6px;
+}
+
+.no-btn {
+    font-family: Montserrat;
+    width: fit-content;
+    color: #9095A1FF; /* neutral-500 */
+    background: #00000000; /* transparent */
+    opacity: 1;
+    border: 1px #9095A1FF solid;
+    border-radius: 8px;
+}
+
+.Dheader {
+    font-size: 24pt;
+    font-weight: bold;
+    padding: 5px 0;
+    text-align: center;
+    margin: 0;
+}
+
+.delete-lego {
+    width: 350px;
+    margin: 20px;
+    text-align: left;
+}
+
+.Dspan {
+    margin-bottom: 10px;
+}
+
+.buttons-div {
+    display: flex;
+    justify-content: space-around;
+}
