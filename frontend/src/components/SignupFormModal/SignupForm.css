@@ -1,10 +1,12 @@
-html {
-    font-family: sans-serif;
+* {
+    font-family: Montserrat;
 }
+
+
 
 html, body, h1, h2, h3, h4, h5, h6, main, nav, div, ul, li {
     margin: 5px;
-    padding: 0;
+    padding: 5px;
 }
 
 input {
@@ -16,5 +18,26 @@ input {
     flex-direction: column;
     width: 350px;
     margin: 20px;
+
+}
+
+input[type=text] {
+    width: 100%;
+    margin: 8px 0;
+    box-sizing: border-box;
+
+}
+
+.username, .password, .email, .fname, .lname {
+    text-align: left;
+    display: block;
+    width: 75%;
+    margin: auto;
+}
+
+input[type=password] {
+    width: 100%;
+    margin: 8px 0;
+    box-sizing: border-box;
 
 }

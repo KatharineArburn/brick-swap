@@ -5,6 +5,7 @@ import { findUserLego } from "../../../store/lego"
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem"
 import DeleteLegoModal from "../../Lego/DeleteLegoModal";
 import { useHistory } from "react-router-dom";
+import "../../Lego/LegoList.css"
 
 const Sets = () => {
     const dispatch = useDispatch();
@@ -31,24 +32,26 @@ const Sets = () => {
 
     const setGrid = Object.values(userSets).map(lego => {
         return (
-            <div className="profile-page-lego-container" key={lego.id}>
+            <div className="lego-list" key={lego.id}>
                 <div onClick={() => history.push(`/lego/${lego.id}`)}>
-                    <img src={lego.image} alt="lego set" className="lego-set-image"/>
-                <div>
-                    <p>{lego.name}</p>
-                    <p>{lego.pieces}</p>
-                </div>
-                </div>
-
-                <div className="lego-buttons">
-                    <Link to={`/lego/${lego.id}/edit`}>
-                        <button className="update-btn">Update</button>
-                    </Link>
-                <button className="delete-btn">
-                <OpenModalMenuItem
-                itemText="Delete"
-                modalComponent={<DeleteLegoModal legoId={lego.id}/>}/>
-                </button>
+                    <img src={lego.image} alt="lego set" className="set-image"/>
+                    <div className="title-grid">
+                        <p className="name">{lego.name} <br/> {lego.pieces} pieces</p>
+                            <div className="lego-buttons">
+                                <div className="update-btn-grid">
+                                <Link to={`/lego/${lego.id}/edit`}>
+                                    <button className="update-btn">Update</button>
+                                </Link>
+                                </div>
+                                <div className="delete-btn-grid">
+                                <button className="delete-btn">
+                                <OpenModalMenuItem
+                                itemText="Delete"
+                                modalComponent={<DeleteLegoModal legoId={lego.id}/>}/>
+                                </button>
+                                </div>
+                            </div>
+                    </div>
                 </div>
             </div>
         );

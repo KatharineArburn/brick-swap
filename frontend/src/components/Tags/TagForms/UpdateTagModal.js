@@ -40,7 +40,8 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
         try {
             updatedTags = dispatch(updateTag(tagFormInfo, tagId))
             .then(() => closeModal())
-            history.push(`/lego/${legoId}`)
+            .then(setReload(!reload))
+            // history.push(`/lego/${legoId}`)
         } catch (res) {
             if (updatedTags && updatedTags.errors) {
                 setErrors(updatedTags.errors)

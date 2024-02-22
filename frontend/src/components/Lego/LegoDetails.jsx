@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLegoDetails } from "../../store/lego";
+import { FaCircle } from "react-icons/fa";
 import Tags from "../Tags/tags"
 import "./LegoDetails.css"
 
@@ -14,7 +15,7 @@ const LegoDetails = () => {
     })
 
     const lego = useSelector((state) => {
-        console.log("STATE", state.lego)
+        // console.log("STATE", state.lego)
         return state.lego
     })
 
@@ -40,7 +41,11 @@ const LegoDetails = () => {
         status,
         image,
     } = lego
-    console.log(lego)
+
+    const setStatus = status === "yes" ? "Available for Trade" : "Not available for Trade"
+
+    const statusCircle = status === "yes" ? <FaCircle className="green-circle" /> : <FaCircle className="red-circle"/>
+
     const {
         firstName,
         lastName
@@ -48,21 +53,27 @@ const LegoDetails = () => {
 
     return (
         <section className="page">
-            <h2>{name}</h2>
-            <div>
-                <img className="image" alt="image" src={image}/>
-                <p>Item Number: {itemNumber}</p>
-                <p>Piece Count: {pieces}</p>
-                <p>Suggested Age: {ages}</p>
-                <p>Set Theme: {theme}</p>
-                <p>Available for trade: {status}</p>
+            <div className="details-container">
+            <div className="grid-left">
+                <img className="set-image" alt="image" src={image}/>
             </div>
-            <div>
-            <p>{firstName} {lastName}</p>
-            <p>City, State</p>
+            <div className="grid-center">
+                <p className="name bigger">{name}</p>
+                <p className="set-number">Set Number: {itemNumber}</p>
+                <p className="pieces">Pieces: {pieces}</p>
+                <p className="age">Suggested Age: {ages}</p>
+                <p className="theme">Set Theme: {theme}</p>
+                <p className="status big">{statusCircle} {setStatus}</p>
+            </div>
+            <div className="grid-right">
+            <p className="user-name">{firstName} {lastName}</p>
+            <p className="user-location">City, State</p>
+            <p className="btn">
             <button
-            hidden={(loggedIn && userSet) || (!loggedIn)}
-            onClick={()=>{alert('Feature coming soon...'); }}>Add to Wishlist</button>
+            hidden={(!userSet) || (!loggedIn)}
+            onClick={()=>{alert('Feature coming soon...'); }} className="wishlist-btn">Add to Wishlist</button>
+            </p>
+            </div>
             </div>
             <Tags />
         </section>

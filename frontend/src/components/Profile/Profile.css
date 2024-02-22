@@ -1,0 +1,59 @@
+.page-container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-areas:
+    "left right";
+    font-family: Montserrat;
+}
+
+.profile-tabs-container {
+    margin: 0px 20px;
+}
+
+.profile-page-tabs-ul {
+    display: flex;
+    justify-content: start;
+    column-gap: 10px;
+    list-style: none;
+    margin-top: 10px;
+}
+
+.profile-page-tab-item-active {
+    border-bottom: solid 2px #FF6026FF;
+    text-color: #FF6026FF;
+    cursor: pointer;
+}
+
+.profile-page-tab-item:hover {
+    cursor: pointer;
+    border-bottom: solid 2px black;
+}
+
+.profile-user-information-container {
+    margin: 0;
+}
+
+.header-img {
+    position: relative;
+}
+
+.profile-pic {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+    width: 125px;
+    height: 125px;
+}
+
+#profile-page-username {
+    font-size: 33px;
+    font-weight: bold;
+    margin: 6px 0px;
+}
+
+/*-------------------------------------------------------*/
+
+.profile-page-content-container {
+    display: flex;
+    margin: 30px 40px;
+}

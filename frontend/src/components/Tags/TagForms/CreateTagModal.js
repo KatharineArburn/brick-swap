@@ -45,6 +45,7 @@ function CreateTagForm({legoId}) {
         try {
             newTags = dispatch(createTag(tagFormInfo))
             .then(() => closeModal())
+            .then(setReload(!reload))
             // history.push(`/lego/${legoId}`)
         } catch (res) {
             if (newTags && newTags.errors) {

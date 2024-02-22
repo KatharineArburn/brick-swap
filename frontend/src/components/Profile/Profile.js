@@ -4,6 +4,9 @@ import { Link, Redirect, useParams } from "react-router-dom";
 import { findUserLego, deleteLego } from "../../store/lego";
 import { useModal } from "../../context/Modal";
 import Sets from "./tabs/sets";
+import Header from '../../images/brick.png'
+import Pic from '../../images/profilepic.png'
+import "./Profile.css"
 
 
 const ProfilePage = () => {
@@ -54,20 +57,30 @@ const ProfilePage = () => {
 
     return (
         <>
+            <div className="header-img">
+                <img className="header-img" src={Header} width="100%"/>
+        <img className="profile-pic" src={Pic}/>
+            </div>
+        <div className="page-container">
+        <div className="left-side">
         <div className="profile-user-information-container">
-            <img id='profile-img' src="" />
-        <h2>{sessionUser.firstName} {sessionUser.lastName}</h2>
+        <h2 className="profile-page-username">{sessionUser.firstName} {sessionUser.lastName}</h2>
         {/* <h3>{sessionUser.user.city} {sessionUser.user.state}</h3> */}
         <h3>City, State</h3>
         </div>
-
+        </div>
+        <div className="right-side">
         <div className="profile-tabs-container">
-            <li className={tab === 'sets' ? activeTabCss : nonActiveTabCss} onClick={() => setTab('sets')}>My Sets ({userSets.length})</li>
-            <li className={tab === 'wishlist' ? activeTabCss : nonActiveTabCss} onClick={() => setTab('wishlist')}>Wishlist</li>
+            <ul className="profile-page-tabs-ul">
+                <li className={tab === 'sets' ? activeTabCss : nonActiveTabCss} onClick={() => setTab('sets')}>My Sets ({userSets.length})</li>
+                <li className={tab === 'wishlist' ? activeTabCss : nonActiveTabCss} onClick={() => setTab('wishlist')}>Wishlist</li>
+            </ul>
         </div>
         <div>
             {tab === 'sets' && <Sets deleteLego={deleteLego} isDeleted={isDeleted} />}
             {/* {tab === 'wishlist' && <Wishlist />} */}
+        </div>
+        </div>
         </div>
         </>
     );

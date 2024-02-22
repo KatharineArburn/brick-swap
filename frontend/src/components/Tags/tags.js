@@ -9,6 +9,7 @@ import "./Tags.css"
 
 const Tags = () => {
     const dispatch = useDispatch();
+    const [reload, setReload] = useState(false);
     const { legoId } = useParams();
 
     const sessionUser = useSelector((state) => {
@@ -16,7 +17,6 @@ const Tags = () => {
     })
 
     const tags = Object.values(useSelector((state) => {
-        // console.log("STATE", state.lego.User.Tags)
         return state.lego.User.Tags
     }))
 
@@ -24,10 +24,6 @@ const Tags = () => {
         // console.log("STATE", state.lego)
         return state.lego
     })
-
-    // const tagCheck = useSelector((state) => {
-    //     return state.tag[legoId]
-    // })
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -42,20 +38,42 @@ const Tags = () => {
     const noTags = tags.length ? true: false
     const userSet = !loggedIn || !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
 
+        let tag0
+        let tag1
+        let tag2
+        let tag3
+        let tag4
 
+    if (tags.length) {
+        tag0 = tags[0].tag0 ? "tag": ""
+        tag1 = tags[0].tag1 ? "tag": ""
+        tag2 = tags[0].tag2 ? "tag": ""
+        tag3 = tags[0].tag3 ? "tag": ""
+        tag4 = tags[0].tag4 ? "tag": ""
+    } else {
+        tag0 = ""
+        tag1 = ""
+        tag2 = ""
+        tag3 = ""
+        tag4 = ""
+    }
 
     return (
         <>
-            <button hidden={(loggedIn && noTags && userSet) || (!loggedIn)}>
+            <button hidden={(loggedIn && noTags && userSet) || (!loggedIn)} className="tagbtn">
             <OpenModalMenuItem
             itemText="Add tags to this set"
             modalComponent={<CreateTagForm legoId={legoId} />}/>
                 </button>
         <div className="tag-list">
             {tags.map((tag) => (
-                <div key={'Tag' + tag.id}>
-                    <p>{tag.tag0} {tag.tag1} {tag.tag2} {tag.tag3} {tag.tag4}</p>
-                { loggedIn && !noTags && userSet && (
+                <div key={'Tag' + tag.id} className="tag-list">
+                    <p className={tag0}>{tag.tag0}</p>
+                    <p className={tag1}>{tag.tag1}</p>
+                    <p className={tag2}>{tag.tag2}</p>
+                    <p className={tag3}>{tag.tag3}</p>
+                    <p className={tag4}>{tag.tag4}</p>
+                <button hidden={(loggedIn && !noTags && userSet)} className="tagbtn">
                 <OpenModalMenuItem
                 itemText="Update tags"
                 modalComponent={
@@ -69,7 +87,7 @@ const Tags = () => {
                 tagId={tag.id}
                             />}
                         />
-                    )}
+                </button>
                 </div>
             ))}
         </div>

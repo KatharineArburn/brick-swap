@@ -12,7 +12,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-top: 50px;
     margin-bottom: 24px;
-    padding: 0 80px;
+
 }
 
 .lego-grid {
@@ -29,11 +29,13 @@
 
 .name {
     justify-self: start;
+    grid-area: info;
 
 }
 
 .pieces {
-    justify-self: end;
+    justify-self: start;
+    grid-area: info;
 
 }
 
@@ -72,6 +74,47 @@
     z-index: 1;
 }
 
+.title-grid {
+    display: grid;
+    grid-gap: 2px 0px;
+    grid-template-areas:
+    "info btn";
+}
+
+.lego-buttons {
+    padding: 10px;
+    justify-self: end;
+}
+
+.update-btn {
+    color: #0A4D20FF; /* success-800 */
+    background: #1DD75BFF; /* success-500 */
+    opacity: 1;
+    border: none;
+    border-radius: 4px;
+    width: 85px;
+    height: 40px;
+}
+
+.update-btn-grid {
+    grid-area: btn;
+    justify-self: end;
+}
+
+.delete-btn {
+    color: #FFFFFFFF;
+    background: #DE3B40FF;
+    opacity: 1;
+    border: none;
+    border-radius: 4px;
+    width: 85px;
+    height: 40px;
+}
+
+.delete-btn-grid {
+    grid-area: btn;
+    justify-self: end;
+}
 
 ul, li {
     list-style-type: none;
