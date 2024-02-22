@@ -14,9 +14,25 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      tag0: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      tag1: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      tag2: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      tag3: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      tag4: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       userId: {
         type: Sequelize.INTEGER,

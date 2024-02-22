@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
     const lego = await Lego.findAll({
         include: {
             model: Tag,
-            attributes: ['id', 'name', 'userId', 'legoId']
+            attributes: ['id', 'tag0', 'tag1', 'tag2', 'tag3', 'tag4', 'userId', 'legoId']
         },
         attributes: [
             "id",
@@ -124,7 +124,7 @@ router.post('/', requireAuth, validateLegoSet, async (req, res, next) => {
 router.put('/:legoId', requireAuth, validateLegoSet, async (req, res, next) => {
     const { legoId } = req.params;
 
-    const {name, itemNumber, pieces, ages, theme, image} = req.body
+    const {name, itemNumber, pieces, ages, theme, status, image} = req.body
 
     const existingLego = await Lego.findByPk(legoId)
 
@@ -142,6 +142,7 @@ router.put('/:legoId', requireAuth, validateLegoSet, async (req, res, next) => {
         updatedLego.pieces = pieces;
         updatedLego.ages = ages;
         updatedLego.theme = theme;
+        updatedLego.status = status;
         updatedLego.image = image;
 
         await updatedLego.save()
@@ -199,7 +200,7 @@ router.get('/:legoId/tags', async (req, res) => {
 })
 
 const validateTags = [
-    check ('name')
+    check ('tag0')
         .exists({checkFalsy: true})
         .notEmpty()
         .withMessage('Tag text is required'),
@@ -209,9 +210,8 @@ const validateTags = [
 // Create lego tags
 router.post('/:legoId/tags', requireAuth, validateTags, async (req, res, next) => {
 
-    const { legoId } = req.params
-    // const userId = req.user.id
-    const { name } = req.body
+    const userId = req.user.id
+    const { legoId, tag0, tag1, tag2, tag3, tag4 } = req.body
 
     const existingLego = await Lego.findByPk(legoId)
 
@@ -221,7 +221,7 @@ router.post('/:legoId/tags', requireAuth, validateTags, async (req, res, next) =
         });
     }
 
-    const existingTag = await Tag.findAll({ where: { name, legoId }})
+    const existingTag = await Tag.findAll({ where: { userId, legoId }})
 
     if (existingTag.length >= 1) {
         return res.status(500).json({
@@ -229,7 +229,13 @@ router.post('/:legoId/tags', requireAuth, validateTags, async (req, res, next) =
         });
     } else {
         const newTag = await Tag.create({
-            name
+            userId,
+            legoId,
+            tag0,
+            tag1,
+            tag2,
+            tag3,
+            tag4
         })
 
         res.status(201)
@@ -237,6 +243,6 @@ router.post('/:legoId/tags', requireAuth, validateTags, async (req, res, next) =
     }
 })
 
-// Update lego tag
+
 
 module.exports = router

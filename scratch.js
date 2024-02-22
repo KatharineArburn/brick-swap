@@ -7,7 +7,6 @@
 
 // npx sequelize model:generate --name Lego --attributes userId:integer,name:string,itemNumber:integer,pieces:integer,ages:string,theme:string,status:string,image:string
 // npx sequelize model:generate --name Tag --attributes name:string
-// npx sequelize model:generate --name LegoTag --attributes legoId:integer,tagId:integer
 // npx sequelize model:generate --name Message --attributes senderId:integer,recipientId:integer,message:string
 // npx sequelize model:generate --name MessageStatus --attributes messageId:integer,userId:integer,isRead:boolean
 // npx sequelize model:generate --name Wishlist --attributes userId:integer,legoId:integer
@@ -15,6 +14,9 @@
 
 // npx sequelize migration:generate --name add-legoId-to-Tag
 // npx sequelize migration:generate --name add-userId-to-Tag
+// npx sequelize migration:generate --name change-column-name-Tag
+// npx sequelize migration:generate --name add-columns-to-Tag
+
 
 
 

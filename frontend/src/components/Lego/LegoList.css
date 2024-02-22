@@ -1,0 +1,179 @@
+.top-header {
+    padding-top: 20px;
+    padding-left: 90px;
+    text-align: center;
+    margin: 25px;
+    width: 75%;
+}
+
+.lego-list {
+    display: grid;
+    grid-gap: 20px 24px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 50px;
+    margin-bottom: 24px;
+
+}
+
+.lego-grid {
+    justify-content: start;
+    display: grid;
+    grid-gap: 2px 0px;
+    grid-template-areas:
+    "grid1"
+    "grid2";
+}
+
+.grid1 {
+    grid-area: 1;
+    display: inline-flex;
+    align-content: space-between;
+    column-gap: 10px;
+}
+
+.name {
+    flex-basis: auto;
+    grid-area: info;
+
+}
+
+.lego-name {
+    justify-self: start;
+    width: fit-content;
+    padding: 5px;
+
+}
+
+.pieces {
+    justify-self: start;
+    grid-area: info;
+
+}
+
+.lego-pieces {
+    justify-self: end;
+    width: fit-content;
+    padding: 5px;
+
+}
+
+.grid2 {
+    justify-self: start;
+    grid-area: grid2;
+}
+
+.lego-grid p {
+    margin: 2px auto;
+}
+
+.set-img {
+    margin-bottom: 5px;
+    width: auto;
+    height: 326px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    color: black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+    background-color: grey;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.title-grid {
+    display: grid;
+    grid-gap: 2px 0px;
+    grid-template-areas:
+    "info btn";
+}
+
+.lego-buttons {
+    padding: 10px;
+    justify-self: end;
+}
+
+.update-btn {
+    color: #0A4D20FF; /* success-800 */
+    background: #1DD75BFF; /* success-500 */
+    opacity: 1;
+    border: none;
+    border-radius: 4px;
+    width: 85px;
+    height: 40px;
+}
+
+.update-btn-grid {
+    grid-area: btn;
+    justify-self: end;
+}
+
+.delete-btn {
+    color: #FFFFFFFF;
+    background: #DE3B40FF;
+    opacity: 1;
+    border: none;
+    border-radius: 4px;
+    width: 85px;
+    height: 40px;
+}
+
+.delete-btn-grid {
+    grid-area: btn;
+    justify-self: end;
+}
+
+ul, li {
+    list-style-type: none;
+}
+
+p {
+    color: black;
+    font-family: Courier;
+    text-align: left;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+@media (max-width: 1350px) {
+    .albums__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 1050px) {
+    .albums__grid {
+        grid-template-columns: repeat(2, minmax(280px, 350px));
+    }
+}
+
+@media (max-width: 740px) {
+    .albums__grid {
+        grid-template-columns: repeat(1, minmax(280px, 400px));
+    }
+}
