@@ -5,7 +5,7 @@ import { getAllTags } from "../../store/tags"
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem"
 import UpdateTagForm from "./TagForms/UpdateTagModal"
 import CreateTagForm from "./TagForms/CreateTagModal"
-import "./Tags.css"
+import "./Tags.css";
 
 const Tags = () => {
     const dispatch = useDispatch();
