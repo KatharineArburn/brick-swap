@@ -23,7 +23,7 @@ router.put('/:tagId', requireAuth, validateTags, async (req, res, next) => {
     const { legoId, tag0, tag1, tag2, tag3, tag4 } = req.body;
 
     const existingTag = await Tag.findByPk(tagId)
-    console.log("EXISTING TAG", existingTag)
+    // console.log("EXISTING TAG", existingTag)
     const currentTag = await Tag.findAll({where: {id: tagId, userId}})
 
     if (!existingTag) {
