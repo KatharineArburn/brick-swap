@@ -3,7 +3,7 @@ import { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLegoDetails } from "../../store/lego";
 import { FaCircle } from "react-icons/fa";
-import Tags from "../Tags/tags"
+import Tags from "../Tags/Tags"
 import "./LegoDetails.css"
 
 const LegoDetails = () => {
