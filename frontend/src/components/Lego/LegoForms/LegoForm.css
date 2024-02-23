@@ -150,6 +150,11 @@ input[type="radio"] {
     border-radius: 8px;
 }
 
+.errors {
+    color: red;
+    font-weight: bold;
+}
+
 @media screen and (max-width:900px) {
     .wrapper {
         display: grid;

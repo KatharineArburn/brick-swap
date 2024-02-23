@@ -48,7 +48,7 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
         }
 
     }
-                console.log('UPDATED TAG', updateTag)
+                // console.log('UPDATED TAG', updateTag)
 
     const handelDelete = (e) => {
         e.preventDefault();
@@ -59,9 +59,6 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
 
     return (
         <form onSubmit={handleSubmit} className="tag-form">
-        <button
-            onClick={handelDelete}
-            >Delete All Set Tags</button>
         <h1>Edit Set Tags</h1>
         <h2 className="form-title">Add up to five tags</h2>
         <label>
@@ -117,6 +114,10 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
         <div className="btn">
         <button type="submit" className="submit-btn">Update Tags</button>
         </div>
+        <button
+            onClick={handelDelete}
+            >Delete All Set Tags
+        </button>
     </form>
     )
 }
