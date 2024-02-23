@@ -28,7 +28,7 @@ router.get('/', async (req, res, next) => {
             "createdAt",
             "updatedAt"
         ],
-        group: ['Lego.id', 'tag.id'],
+        group: ['Lego.id', 'Tag.id'],
         raw:true,
     });
     // console.log("LEGO", lego)
