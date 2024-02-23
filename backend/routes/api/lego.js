@@ -28,7 +28,8 @@ router.get('/', async (req, res, next) => {
             "createdAt",
             "updatedAt"
         ],
-        group: ['Lego.id']
+        group: ['Lego.id'],
+        raw:true,
     });
     // console.log("LEGO", lego)
     return res.json({Lego: lego});
