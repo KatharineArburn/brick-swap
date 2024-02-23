@@ -16,10 +16,15 @@ const Tags = () => {
     })
 
     const tags = Object.values(useSelector((state) => {
+        console.log('TAGS', state.lego.User)
         return state.lego.User.Tags
     }))
 
-    console.log('TAGS', tags)
+    const tagUserId = (useSelector((state) => {
+        return state.lego.User.id
+    }))
+
+    console.log('TAGS', tagUserId)
 
     const lego = useSelector((state) => {
         return state.lego
@@ -73,7 +78,7 @@ const Tags = () => {
                     <p className={tag2}>{tag.tag2}</p>
                     <p className={tag3}>{tag.tag3}</p>
                     <p className={tag4}>{tag.tag4}</p>
-                <button hidden={(loggedIn && !noTags && userSet)} className="tagbtn">
+                <button hidden={(tagUserId !== sessionUser?.id)} className="tagbtn">
                 <OpenModalMenuItem
                 itemText="Update tags"
                 modalComponent={
