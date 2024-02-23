@@ -13,7 +13,9 @@ router.get('/', async (req, res, next) => {
     const lego = await Lego.findAll({
         include: {
             model: Tag,
-            attributes: ['id', 'tag0', 'tag1', 'tag2', 'tag3', 'tag4', 'userId', 'legoId']
+            // attributes: ['id', 'tag0', 'tag1', 'tag2', 'tag3', 'tag4', 'userId', 'legoId']
+            attributes: []
+
         },
         attributes: [
             "id",
@@ -28,7 +30,7 @@ router.get('/', async (req, res, next) => {
             "createdAt",
             "updatedAt"
         ],
-        group: ['Lego.id', 'Tag.id'],
+        group: ['Lego.id'],
         raw:true,
     });
     // console.log("LEGO", lego)
