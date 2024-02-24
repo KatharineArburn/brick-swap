@@ -89,7 +89,7 @@ const validateLegoSet = [
         .withMessage('Name of set is required'),
     check('itemNumber')
         .exists({checkFalsy: true})
-        .withMessage('itemNumber of set is required'),
+        .withMessage('Set number of set is required'),
     check('pieces')
         .exists({checkFalsy: true})
         .isFloat({min: 10})
