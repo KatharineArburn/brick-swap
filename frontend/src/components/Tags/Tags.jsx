@@ -24,7 +24,7 @@ const Tags = () => {
         return state.lego.User.id
     }))
 
-    console.log('TAGS', tagUserId)
+    // console.log('TAGS', tagUserId)
 
     const lego = useSelector((state) => {
         return state.lego

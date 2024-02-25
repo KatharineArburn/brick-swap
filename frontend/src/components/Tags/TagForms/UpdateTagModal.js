@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
-import { updateTag, deleteTag } from "../../../store/tags";
+import { updateTag, deleteTag, getAllTags } from "../../../store/tags";
 
 
 const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { closeModal } = useModal();
     const [reload, setReload] = useState(false);
     const [errors, setErrors] = useState({})
@@ -38,7 +40,9 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
         try {
             updatedTags = dispatch(updateTag(tagFormInfo, tagId))
             .then(() => closeModal())
-            .then(setReload(!reload))
+            .then(() => getAllTags(legoId))
+            // .then(setReload(!reload))
+
             // history.push(`/lego/${legoId}`)
             // console.log('UPDATED TAG', updateTag)
         } catch (res) {
@@ -60,7 +64,6 @@ const UpdateTagForm = ({legoId, tagA, tagB, tagC, tagD, tagE, tagId}) => {
     return (
         <form onSubmit={handleSubmit} className="tag-form">
         <h1>Edit Set Tags</h1>
-        <h2 className="form-title">Add up to five tags</h2>
         <label>
             <input
                 type="text"

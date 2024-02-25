@@ -47,7 +47,7 @@ export const createTag = (payload) => async (dispatch) => {
     });
     if (res.ok) {
         const data = await res.json();
-        console.log(data)
+        // console.log(data)
         dispatch(postTags(data))
         return data;
     }
@@ -65,7 +65,6 @@ export const updateTag = (payload, tagId) => async (dispatch) => {
         dispatch(editTag(data))
         return data
     }
-    // console.log("RES", res)
     return res
 }
 
@@ -85,33 +84,23 @@ export const deleteTag = (tagId) => async (dispatch) => {
 const tagReducer = (state = {}, action) => {
     switch(action.type) {
         case LOAD_TAGS:
-            // const tags = action.data.reduce((obj, tag) => {
-            //     obj[tag.id] = tag;
-            //     return obj
-            // }, {});
-            // return { ...tags, tags: tags}
             const tagState = { ...state};
-            // console.log(action.tags)
             action.tags.Tags.forEach((tag) => {
                 tagState[tag.id] = tag
             })
             return { ...state, [action.legoId]: tagState}
         case CREATE_TAGS:
             if (action.tags) {
-            // return {...state, [action.legoId]: {...state[action.legoId], [action.payload.id]: action.payload}}
                 const updatedSetTags = { ...state.tags, [action.tag.id]: action.tag };
+                // return { ...state, updatedSetTags}
                 return {...state, tagReviews: updatedSetTags}
             } else {
                 return state;
             }
         case UPDATE_TAGS:
-            return {...state, [action.tagId]: action.tag}
-            // if (action.tag) {
-            //     const updatedSetTags = {...state.tagReviews, [action.tag.id]: action.tag };
-            //     return { ...state, tagReviews: updatedSetTags}
-            // } else {
-            //     return state
-            // }
+            const updateState = {...state, [action.tagId]: action.tag}
+            return updateState
+            // return {...state, [action.tagId]: action.tag}
         case REMOVE_TAG:
             const newState = { ...state };
             delete newState[action.tagId];
