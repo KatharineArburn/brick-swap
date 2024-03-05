@@ -1,9 +1,7 @@
 const router = require('express').Router();
 
 const { requireAuth } = require('../../utils/auth');
-const { User, Lego, Tag, sequelize } = require('../../db/models');
-const { Op } = require('sequelize');
-
+const { User, Lego, Tag, Wishlist, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -246,6 +244,30 @@ router.post('/:legoId/tags', requireAuth, validateTags, async (req, res, next) =
     }
 })
 
+// Add set to user wishlist
+router.post('/:legoId/wishlist', requireAuth, async (req, res, next) => {
+    const { legoId } = req.params;
+    const userId = req.user.id;
 
+    const onWishlist = await Wishlist.findByPk(legoId)
+
+    if (onWishlist) {
+        if (onWishlist.userId === req.user.id) {
+
+            const result = await Wishlist.destroy({where: { id: legoId } });
+
+            res.json({"message": "Lego set successfully removed from wishlist"})
+        }
+    } else {
+        const addToWishlist = await Wishlist.create({
+            legoId,
+            userId,
+        })
+
+        res.status(201)
+        res.json(addToWishlist)
+    }
+
+})
 
 module.exports = router

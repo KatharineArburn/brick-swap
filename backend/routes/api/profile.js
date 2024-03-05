@@ -138,6 +138,5 @@ router.delete('/:messageId', requireAuth, async (req, res, next) => {
     }
 })
 
-// Get user wishlist
-router.get('/:userid/wishlist')
+
 module.exports = router
