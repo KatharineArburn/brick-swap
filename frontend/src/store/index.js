@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import legoReducer from "./lego";
 import tagReducer from "./tags";
+import wishlistReducer from "./wishlist";
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     lego: legoReducer,
-    tag: tagReducer
+    tag: tagReducer,
+    wishlist: wishlistReducer
 });
 
 let enhancer;

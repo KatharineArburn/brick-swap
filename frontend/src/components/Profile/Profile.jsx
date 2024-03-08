@@ -4,6 +4,7 @@ import { Link, Redirect, useParams } from "react-router-dom";
 import { findUserLego, deleteLego } from "../../store/lego";
 import { useModal } from "../../context/Modal";
 import Sets from "./tabs/sets";
+import Wishlist from "./tabs/wishlist";
 import Header from '../../images/brick.png'
 import Pic from '../../images/profilepic.png'
 import "./Profile.css"
@@ -78,7 +79,7 @@ const ProfilePage = () => {
         </div>
         <div>
             {tab === 'sets' && <Sets deleteLego={deleteLego} isDeleted={isDeleted} />}
-            {/* {tab === 'wishlist' && <Wishlist />} */}
+            {tab === 'wishlist' && <Wishlist />}
         </div>
         </div>
         </div>

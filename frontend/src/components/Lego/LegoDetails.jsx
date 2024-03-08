@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLegoDetails } from "../../store/lego";
+import { addToWishlist, deleteFromWishlist } from "../../store/wishlist";
 import { FaCircle } from "react-icons/fa";
 import Tags from "../Tags/Tags"
 import "./LegoDetails.css"
@@ -20,17 +21,32 @@ const LegoDetails = () => {
     })
 
     const [isLoading, setIsLoading] = useState(false)
+    const [onWishlist, setOnWishlist] = useState(null)
 
     useEffect(() => {
         dispatch(getLegoDetails(legoId))
         .then(() => setIsLoading(true));
-    }, [dispatch, legoId])
+    }, [dispatch, legoId, setIsLoading, onWishlist])
+
+    useEffect(() => {
+        setOnWishlist(lego?.onWishlist);
+    }, [lego?.onWishlist])
 
     if (!isLoading) return <h1>Loading...</h1>
+
+    if (!lego ) return <h1>Set not found</h1>
 
     const loggedIn = sessionUser ? true : null
     const userSet = !loggedIn || !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
 
+    const handleWishlist = async () => {
+        if (!onWishlist) {
+            dispatch(addToWishlist(legoId)).then(() => setOnWishlist(true));
+        }
+        else {
+            dispatch(deleteFromWishlist(legoId)).then(() => setOnWishlist(false));
+        }
+    }
 
     const {
         name,
@@ -71,7 +87,7 @@ const LegoDetails = () => {
             <p className="btn">
             <button
             hidden={(!userSet) || (!loggedIn)}
-            onClick={()=>{alert('Feature coming soon...'); }} className="wishlist-btn">Add to Wishlist</button>
+            onClick={handleWishlist} className="wishlist-btn">Add to Wishlist</button>
             </p>
             </div>
             </div>
