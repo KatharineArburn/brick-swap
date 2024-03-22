@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { getAllTags } from "../../store/tags"
+import { getAllTags, deleteTag } from "../../store/tags"
+import { useModal } from "../../context/Modal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem"
-import UpdateTagForm from "./TagForms/UpdateTagModal"
+// import UpdateTagForm from "./TagForms/UpdateTagModal"
 import CreateTagForm from "./TagForms/CreateTagModal"
 import "./Tags.css";
 
 const Tags = () => {
     const dispatch = useDispatch();
+    const { closeModal } = useModal();
+    const [reload, setReload] = useState(false);
     const { legoId } = useParams();
 
     const sessionUser = useSelector((state) => {
@@ -16,7 +19,7 @@ const Tags = () => {
     })
 
     const tags = Object.values(useSelector((state) => {
-        console.log('TAGS', state.lego.User)
+        // console.log('TAGS', state.lego.User.Tags)
         return state.lego.User.Tags
     }))
 
@@ -24,7 +27,7 @@ const Tags = () => {
         return state.lego.User.id
     }))
 
-    console.log('TAGS', tagUserId)
+    // console.log('TAGS', tags)
 
     const lego = useSelector((state) => {
         return state.lego
@@ -40,59 +43,32 @@ const Tags = () => {
     if (!isLoading) return <h1>Loading...</h1>
 
     const loggedIn = sessionUser ? true : null
-    const noTags = tags.length ? true: false
-    const userSet = !loggedIn || !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
+    // const noTags = tags.length ? true: false
+    // const userSet = !loggedIn || !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
 
-        let tag0
-        let tag1
-        let tag2
-        let tag3
-        let tag4
+    const userSet = lego.userId === sessionUser.id
+// console.log(userSet)
 
-    if (tags.length) {
-        tag0 = tags[0].tag0 ? "tag": ""
-        tag1 = tags[0].tag1 ? "tag": ""
-        tag2 = tags[0].tag2 ? "tag": ""
-        tag3 = tags[0].tag3 ? "tag": ""
-        tag4 = tags[0].tag4 ? "tag": ""
-    } else {
-        tag0 = ""
-        tag1 = ""
-        tag2 = ""
-        tag3 = ""
-        tag4 = ""
-    }
+    // const handelDelete = (e) => {
+    //     e.preventDefault();
+    //     dispatch(deleteTag(tagId))
+    //         .then(() => closeModal())
+    //         .then(setReload(!reload))
+    // }
 
     return (
         <>
-            <button hidden={(loggedIn && noTags && userSet) || (!loggedIn)} className="tagbtn">
+            <button hidden={(loggedIn && !userSet) || (!loggedIn)} className="tagbtn">
             <OpenModalMenuItem
             itemText="Add tags to this set"
             modalComponent={<CreateTagForm legoId={legoId} />}/>
                 </button>
         <div className="tag-list">
-            {tags.map((tag) => (
-                <div key={'Tag' + tag.id} className="tag-list">
-                    <p className={tag0}>{tag.tag0}</p>
-                    <p className={tag1}>{tag.tag1}</p>
-                    <p className={tag2}>{tag.tag2}</p>
-                    <p className={tag3}>{tag.tag3}</p>
-                    <p className={tag4}>{tag.tag4}</p>
-                <button hidden={(tagUserId !== sessionUser?.id)} className="tagbtn">
-                <OpenModalMenuItem
-                itemText="Update tags"
-                modalComponent={
-                <UpdateTagForm
-                legoId={legoId}
-                tagA={tag.tag0}
-                tagB={tag.tag1}
-                tagC={tag.tag2}
-                tagD={tag.tag3}
-                tagE={tag.tag4}
-                tagId={tag.id}
-                            />}
-                        />
-                </button>
+            {Object.values(tags).map((tag) => (
+                <div>
+                    <li key={tag.id}>
+                        <p className='tag-name'>{tag.tag}</p>
+                    </li>
                 </div>
             ))}
         </div>

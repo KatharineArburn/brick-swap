@@ -11,12 +11,13 @@ const LegoDetails = () => {
     const dispatch = useDispatch();
     const { legoId } = useParams();
 
+
     const sessionUser = useSelector((state) => {
         return state.session.user
     })
 
     const lego = useSelector((state) => {
-        // console.log("STATE", state.lego)
+        // console.log("STATE", state.lego.User)
         return state.lego
     })
 
@@ -32,7 +33,7 @@ const LegoDetails = () => {
         setOnWishlist(lego?.onWishlist);
     }, [lego?.onWishlist])
 
-    if (!isLoading) return <h1>Loading...</h1>
+    if (!isLoading) return <h1>Building...</h1>
 
     if (!lego ) return <h1>Set not found</h1>
 
@@ -58,14 +59,15 @@ const LegoDetails = () => {
         image,
     } = lego
 
-    const setStatus = status === "yes" ? "Available for Trade" : "Not available for Trade"
-
-    const statusCircle = status === "yes" ? <FaCircle className="green-circle" /> : <FaCircle className="red-circle"/>
-
     const {
         firstName,
         lastName
     } = lego.User
+
+    const setStatus = status === "yes" ? "Available for Trade" : "Not available for Trade"
+
+    const statusCircle = status === "yes" ? <FaCircle className="green-circle" /> : <FaCircle className="red-circle"/>
+
 
     return (
         <section className="page">

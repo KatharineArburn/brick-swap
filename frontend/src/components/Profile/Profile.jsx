@@ -43,7 +43,7 @@ const ProfilePage = () => {
             .then(() => setIsDeleted(true))
     }
 
-    if (!isLoading) return <h1>Locating your sets...</h1>
+    if (!isLoading) return <h1>Building...</h1>
 
     if (!userSets) return <>
         <h2>{sessionUser.user.firstName} {sessionUser.user.lastName}</h2>

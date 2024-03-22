@@ -4,6 +4,7 @@ const usersRouter = require('./users.js');
 const legoRouter = require('./lego.js');
 const profileRouter = require('./profile.js');
 const tagRouter = require('./tag.js');
+const wishlistRouter = require('./wishlist.js')
 
 
 
@@ -19,5 +20,6 @@ router.use('/users', usersRouter);
 router.use('/lego', legoRouter);
 router.use('/profile', profileRouter);
 router.use('/tag', tagRouter);
+router.use('/wishlist', wishlistRouter)
 
 module.exports = router;

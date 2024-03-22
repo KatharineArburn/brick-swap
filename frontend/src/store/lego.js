@@ -52,11 +52,12 @@ export const deleteLego = (legoId) => async (dispatch) => {
 
 export const getLegoDetails = (legoId) => async (dispatch) => {
     const res = await fetch(`/api/lego/${legoId}`)
-
+    console.log("legoID", legoId)
     if (res.ok) {
         const data = await res.json();
-        dispatch(legoDetails(data));
         // console.log("DATA", data)
+        dispatch(legoDetails(data));
+        // return data
     }
 
     return res

@@ -1,8 +1,6 @@
 const router = require('express').Router();
 
-const { requireAuth } = require('../../utils/auth');
-const { User, Wishlist, sequelize } = require('../../db/models');
-const { check } = require('express-validator');
+const { Lego, Wishlist, sequelize } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 
 // Get user wishlist
@@ -10,6 +8,24 @@ router.get('/:userId', async (req, res, next) =>{
     const { userId } = req.params
 
     const wishlist = await Wishlist.findAll({
+        include: {
+            model: Lego,
+            attributes: [
+                "id",
+                "userId",
+                "name",
+                "itemNumber",
+                "pieces",
+                "ages",
+                "theme",
+                "status",
+                "image",
+                "createdAt",
+                "updatedAt"
+            ]
+            // attributes: ['name', 'itemNumber', 'pieces', 'status', 'image']
+            // attributes: []
+        },
         where: {
             userId
         },
@@ -21,7 +37,9 @@ router.get('/:userId', async (req, res, next) =>{
         group: ['Wishlist.id'],
         raw:true,
     });
-    return res.json({Wishlist: wishlist})
+
+        return res.json(wishlist)
+
 });
 
 

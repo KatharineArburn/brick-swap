@@ -10,28 +10,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Tag.init({
-    tag0: {
+    tag: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true
       }
-    },
-    tag1: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    tag2: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    tag3: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    tag4: {
-      type: DataTypes.STRING,
-      allowNull: true,
     },
     userId: {
       type: DataTypes.INTEGER,

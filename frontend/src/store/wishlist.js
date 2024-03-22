@@ -29,7 +29,7 @@ export const getUserWishlist = (userId) => async (dispatch) => {
 
     if (res.ok) {
         const data = await res.json();
-        console.log("DATA", data)
+        // console.log("DATA", data)
         dispatch(loadWishlist(data));
         // return data
     }

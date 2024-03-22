@@ -42,10 +42,10 @@ router.get('/:legoId', async (req, res) => {
 
     const lego = await Lego.findByPk( legoId, {
         include: [
-            // {
-            //     model: Tag,
-            //     attributes: ['id', 'name', 'userId', 'legoId'],
-            // },
+            {
+                model: Tag,
+                attributes: ['id', 'tag'],
+            },
             {
                 model: User,
                 attributes: ['id', 'firstName', 'lastName'],
@@ -72,7 +72,7 @@ router.get('/:legoId', async (req, res) => {
             createdAt: lego.createdAt,
             updatedAt: lego.updatedAt
         }
-
+        // console.log(lego.Tag)
         data.User = lego.User
         // data.Tag = lego.Tag
         // console.log("DATA", data)
@@ -201,8 +201,7 @@ router.get('/:legoId/tags', async (req, res) => {
 })
 
 const validateTags = [
-    check ('tag0')
-        .exists({checkFalsy: true})
+    check ('tag')
         .notEmpty()
         .withMessage('Tag text is required'),
     handleValidationErrors
@@ -212,7 +211,7 @@ const validateTags = [
 router.post('/:legoId/tags', requireAuth, validateTags, async (req, res, next) => {
 
     const userId = req.user.id
-    const { legoId, tag0, tag1, tag2, tag3, tag4 } = req.body
+    const { legoId, tag } = req.body
 
     const existingLego = await Lego.findByPk(legoId)
 
@@ -222,30 +221,26 @@ router.post('/:legoId/tags', requireAuth, validateTags, async (req, res, next) =
         });
     }
 
-    const existingTag = await Tag.findAll({ where: { userId, legoId }})
+    // const existingTag = await Tag.findAll({ where: { userId, legoId }})
 
-    if (existingTag.length >= 1) {
-        return res.status(500).json({
-            message: "Tag already exists for this lego set"
-        });
-    } else {
+    // if (existingTag.length >= 1) {
+    //     return res.status(500).json({
+    //         message: "Tag already exists for this lego set"
+    //     });
+    // } else {
         const newTag = await Tag.create({
             userId,
             legoId,
-            tag0,
-            tag1,
-            tag2,
-            tag3,
-            tag4
+            tag
         })
 
         res.status(201)
         return res.json(newTag)
-    }
+    // }
 })
 
 // Add set to user wishlist
-router.post('/:legoId/wishlist', requireAuth, async (req, res, next) => {
+router.post('/:legoId/wishlist', async (req, res, next) => {
     const { legoId } = req.params;
     const userId = req.user.id;
 

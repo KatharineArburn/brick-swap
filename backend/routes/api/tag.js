@@ -8,8 +8,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 
 const validateTags = [
-    check ('tag0')
-        .exists({checkFalsy: true})
+    check ('tag')
         .notEmpty()
         .withMessage('Tag text is required'),
     handleValidationErrors
@@ -20,7 +19,7 @@ router.put('/:tagId', requireAuth, validateTags, async (req, res, next) => {
     const userId = req.user.id
     const { tagId } = req.params;
 
-    const { legoId, tag0, tag1, tag2, tag3, tag4 } = req.body;
+    const { legoId, tag } = req.body;
 
     const existingTag = await Tag.findByPk(tagId)
     console.log("EXISTING TAG", existingTag)
@@ -40,11 +39,7 @@ router.put('/:tagId', requireAuth, validateTags, async (req, res, next) => {
         const updatedTag = await Tag.findByPk(tagId);
 
         updatedTag.legoId = legoId;
-        updatedTag.tag0 = tag0;
-        updatedTag.tag1 = tag1;
-        updatedTag.tag2 = tag2;
-        updatedTag.tag3 = tag3;
-        updatedTag.tag4 = tag4;
+        updatedTag.tag = tag;
 
         await updatedTag.save()
 

@@ -21,7 +21,7 @@ const LegoList = () => {
         .then(() => setIsLoaded(true));
     }, [dispatch])
 
-    if (!isLoaded) return <h1>Loading...</h1>
+    if (!isLoaded) return <h1>Building...</h1>
 
     const handleSearchQuery = query => {
         setIsLoaded(false);
