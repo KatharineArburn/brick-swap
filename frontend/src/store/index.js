@@ -4,12 +4,14 @@ import sessionReducer from "./session";
 import legoReducer from "./lego";
 import tagReducer from "./tags";
 import wishlistReducer from "./wishlist";
+import profileReducer from "./profile";
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     lego: legoReducer,
     tag: tagReducer,
-    wishlist: wishlistReducer
+    wishlist: wishlistReducer,
+    profile: profileReducer
 });
 
 let enhancer;

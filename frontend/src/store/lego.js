@@ -79,7 +79,7 @@ export const createLego = (payload) => async (dispatch) => {
 }
 
 export const findUserLego = (userId) => async (dispatch) => {
-    const res = await csrfFetch(`/api/profile/${userId}`)
+    const res = await csrfFetch(`/api/profile/lego/${userId}`)
 
     if (res.ok) {
         const data = await res.json();

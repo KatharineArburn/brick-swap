@@ -59,7 +59,10 @@ function CreateTagForm({legoId}) {
             <div className="errors">{errors.tag}</div>
             </label>
             <div className="btn">
-            <button type="submit" className="submit-btn">Add Tags</button>
+            <button type="submit"
+            disabled={tag.length < 2 || tag.length > 20}
+            className={tag.length >= 2 && tag.length < 20 ? "submit-btn" : "disabledButton"}>
+                Add Tags</button>
             </div>
         </form>
         )

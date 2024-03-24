@@ -14,6 +14,7 @@ const Sets = () => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const lego = useSelector((state) => {
+        console.log(state.lego)
         return state.lego
     })
 
@@ -27,10 +28,10 @@ const Sets = () => {
         .then(() => setIsLoaded(true));
     }, [dispatch, userId])
 
-    const userSets = Object.values(lego).filter((lego) => (lego.userId === sessionUser.id))
+    // const userSets = Object.values(lego).filter((lego) => (lego.userId === sessionUser.id))
     // console.log(userSets)
 
-    const setGrid = Object.values(userSets).map(lego => {
+    const setGrid = Object.values(lego).map(lego => {
         return (
             <div className="lego-list" key={lego.id}>
                 <div>
@@ -40,11 +41,15 @@ const Sets = () => {
                             <div className="lego-buttons">
                                 <div className="update-btn-grid">
                                 <Link to={`/lego/${lego.id}/edit`}>
-                                    <button className="update-btn">Update</button>
+                                    <button
+                                    hidden={lego.userId !== sessionUser.id}
+                                    className="update-btn">Update</button>
                                 </Link>
                                 </div>
                                 <div className="delete-btn-grid">
-                                <button className="delete-btn">
+                                <button
+                                hidden={lego.userId !== sessionUser.id}
+                                className="delete-btn">
                                 <OpenModalMenuItem
                                 itemText="Delete"
                                 modalComponent={<DeleteLegoModal legoId={lego.id}/>}/>

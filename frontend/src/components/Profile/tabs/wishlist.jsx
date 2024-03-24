@@ -41,7 +41,7 @@ const Wishlist = () => {
         return (
             <div className="lego-list" key={lego.id}>
                 <div>
-                    <img onClick={() => history.push(`/lego/${lego.id}`)} src={lego['Lego.image']} alt="lego set" className="set-image"/>
+                    <img onClick={() => history.push(`/lego/${lego['Lego.id']}`)} src={lego['Lego.image']} alt="lego set" className="set-image"/>
                     <div className="title-grid">
                         <p className="name">{lego['Lego.name']} <br/> {lego['Lego.pieces']} pieces</p>
                     </div>

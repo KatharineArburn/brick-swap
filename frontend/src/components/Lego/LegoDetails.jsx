@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom"
 import { getLegoDetails } from "../../store/lego";
 import { addToWishlist, deleteFromWishlist } from "../../store/wishlist";
 import { FaCircle } from "react-icons/fa";
@@ -17,7 +18,6 @@ const LegoDetails = () => {
     })
 
     const lego = useSelector((state) => {
-        // console.log("STATE", state.lego.User)
         return state.lego
     })
 
@@ -61,7 +61,9 @@ const LegoDetails = () => {
 
     const {
         firstName,
-        lastName
+        lastName,
+        city,
+        state
     } = lego.User
 
     const setStatus = status === "yes" ? "Available for Trade" : "Not available for Trade"
@@ -84,8 +86,10 @@ const LegoDetails = () => {
                 <p className="status big">{statusCircle} {setStatus}</p>
             </div>
             <div className="grid-right">
+            <Link to={`/profile/${lego.userId}`}>
             <p className="user-name">{firstName} {lastName}</p>
-            <p className="user-location">City, State</p>
+            <p className="user-location">{city}, {state}</p>
+            </Link>
             <p className="btn">
             <button
             hidden={(!userSet) || (!loggedIn)}

@@ -63,12 +63,6 @@ export const deleteFromWishlist = (legoId) => async (dispatch) => {
 const wishlistReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_WISHLIST:
-            // console.log('REDUCEER', wishlist)
-            // const wishlist = action.wishlist.reduce((obj, set) => {
-            //     obj[set.id] = set;
-            //     return obj
-            // }, {});
-            // return {...wishlist}
             const wishlistState = {...state};
             action.wishlist.forEach((wishlist) => {
                 if (!wishlistState[wishlist.id]) {
