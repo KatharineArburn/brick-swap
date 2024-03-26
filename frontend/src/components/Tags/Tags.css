@@ -1,9 +1,32 @@
 .tag {
+    display: flex;
     border-radius: 22px;
     border-width: 1px;
     border-style: solid;
     width: min-content;
-    padding: 5px;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    background-color: gainsboro;
+    position: relative;
+}
+
+.x-btn {
+    width: min-content;
+    height: min-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+    margin-left: 5px;
+}
+
+.btn-text {
+    font-size: 8pt;
+    font-weight: 400;
 }
 
 .tag:empty {
@@ -16,7 +39,7 @@
     column-gap: 10px;
 }
 
-.no-btn {
+.tagbtn {
     margin-top: 5px;
     display: flex;
     align-items: center;

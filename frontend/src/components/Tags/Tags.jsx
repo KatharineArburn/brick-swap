@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getAllTags, deleteTag } from "../../store/tags"
 import { useModal } from "../../context/Modal";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem"
-// import UpdateTagForm from "./TagForms/UpdateTagModal"
+import DeleteTagForm from "./TagForms/DeleteTagModal"
 import CreateTagForm from "./TagForms/CreateTagModal"
 import "./Tags.css";
 
@@ -42,35 +42,40 @@ const Tags = () => {
 
     if (!isLoading) return <h1>Loading...</h1>
 
-    const loggedIn = sessionUser ? true : null
-    // const noTags = tags.length ? true: false
-    // const userSet = !loggedIn || !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
-
     const userSet = lego.userId === sessionUser.id
 // console.log(userSet)
 
-    // const handelDelete = (e) => {
-    //     e.preventDefault();
-    //     dispatch(deleteTag(tagId))
-    //         .then(() => closeModal())
-    //         .then(setReload(!reload))
-    // }
+    const removeableTags = Object.values(tags).map((tag) => (
+    <div key={tag.id} className='tag'>{tag.tag}
+            <button className="x-btn" id="x">
+            <OpenModalMenuItem
+                itemText="X"
+                className="btn-text"
+                modalComponent={<DeleteTagForm tagId={tag.id}/>} />
+            </button>
+
+    </div>
+    ))
+
+    const viewOnlyTags = Object.values(tags).map((tag) => (
+        <div>
+            <li key={tag.id}>
+                <p className='tag'>{tag.tag}</p>
+            </li>
+        </div>
+        ))
 
     return (
         <>
-            <button hidden={(loggedIn && !userSet) || (!loggedIn)} className="tagbtn">
+        {userSet &&
+            <button className="tagbtn">
             <OpenModalMenuItem
             itemText="Add tags to this set"
             modalComponent={<CreateTagForm legoId={legoId} />}/>
                 </button>
+            }
         <div className="tag-list">
-            {Object.values(tags).map((tag) => (
-                <div>
-                    <li key={tag.id}>
-                        <p className='tag-name'>{tag.tag}</p>
-                    </li>
-                </div>
-            ))}
+        {userSet ? removeableTags : viewOnlyTags}
         </div>
         </>
     )
