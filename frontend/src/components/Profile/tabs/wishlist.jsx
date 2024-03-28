@@ -12,12 +12,17 @@ const Wishlist = () => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const wishlist = useSelector((state) => {
-        console.log('STATE', state)
         return state.wishlist
     })
 
+    console.log('STATE', wishlist)
     const sessionUser = useSelector((state) => {
         return state.session.user
+    })
+
+    const userProfile = useSelector((state) => {
+        console.log(state.profile)
+        return state.profile.userInfo
     })
 
 
@@ -26,18 +31,18 @@ const Wishlist = () => {
         .then(() => setIsLoaded(true));
     }, [dispatch, userId])
 
-    if (!wishlist) return <>
+    if (!Object.keys(wishlist) ) return <>
         <h1>Explore Sets in your area</h1>
-        <Link to={`/lego`}>
+        <Link to={`/`}>
             <button>Check out these bricks!</button>
         </Link>
     </>
 
-    const userSets = Object.values(wishlist).filter((wishlist) => (wishlist.userId === sessionUser.id))
-    // console.log("USERSETS",userSets)
+    const userSets = Object.values(wishlist).filter((wishlist) => (wishlist.userId === userProfile.id))
+    console.log("USERSETS",userSets)
 
     const setGrid = Object.values(userSets).map(lego => {
-        console.log('LEGO', lego)
+        // console.log('LEGO', lego)
         return (
             <div className="lego-list" key={lego.id}>
                 <div>

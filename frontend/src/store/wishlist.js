@@ -1,8 +1,8 @@
-// import { csrfFetch } from "./csrf";
+import { csrfFetch } from "./csrf";
 
 export const LOAD_WISHLIST = "wishlist/LOAD_WISHLIST";
-// export const ADDTO_WISHLIST = "wishlist/ADDTO_WISHLIST";
-// export const REMOVE_WISHLIST = "wishlist/REMOVE_WISHLIST";
+export const ADDTO_WISHLIST = "wishlist/ADDTO_WISHLIST";
+export const REMOVE_WISHLIST = "wishlist/REMOVE_WISHLIST";
 
 
 export const loadWishlist = (wishlist, userId) => ({
@@ -11,18 +11,17 @@ export const loadWishlist = (wishlist, userId) => ({
     userId
 });
 
-// export const postWishlist = (legoId, payload) => ({
-//     type: ADDTO_WISHLIST,
-//     legoId,
-//     payload
-// })
+export const postWishlist = (legoId, payload) => ({
+    type: ADDTO_WISHLIST,
+    legoId,
+    payload
+})
 
-// export const deleteFromWishlist = (wish)
 
-// export const removeWishlist = (legoId) => ({
-//     type: REMOVE_LEGO,
-//     legoId
-// });
+export const removeWishlist = (legoId) => ({
+    type: REMOVE_WISHLIST,
+    legoId
+});
 
 export const getUserWishlist = (userId) => async (dispatch) => {
     const res = await fetch(`/api/wishlist/${userId}`)
@@ -39,25 +38,31 @@ export const getUserWishlist = (userId) => async (dispatch) => {
 }
 
 export const addToWishlist = (legoId) => async (dispatch) => {
-    try {
-        await fetch(`api/lego/${legoId}/wishlist`, {
-            method: 'POST'
-        })
+    const res = await csrfFetch(`/api/lego/${legoId}/wishlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // body: JSON.stringify(legoId),
+    });
+    if (res.ok) {
+        const data = await res.json();
+        // console.log(data)
+        dispatch(postWishlist(legoId, data))
+        return data;
     }
-    catch (err) {
-        return err
-    }
+    return res;
 }
 
-export const deleteFromWishlist = (legoId) => async (dispatch) => {
-    try {
-        await fetch(`api/lego/${legoId}/wishlist`, {
-            method: 'DELETE'
-        })
+export const deleteFromWishlist = (wishlistId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/wishlist/${wishlistId}`, {
+        method: "DELETE"
+    });
+    console.log ("RES", res)
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(removeWishlist(wishlistId))
+        return data;
     }
-    catch (err) {
-        return err
-    }
+    return res
 }
 
 const wishlistReducer = (state = {}, action) => {
@@ -70,6 +75,10 @@ const wishlistReducer = (state = {}, action) => {
                 }
             })
             return {...wishlistState}
+        // case ADDTO_WISHLIST:
+        //     return state;
+        // case REMOVE_WISHLIST:
+        //     return state;
         default:
             return state;
     }

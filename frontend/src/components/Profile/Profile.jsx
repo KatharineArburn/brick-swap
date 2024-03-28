@@ -32,17 +32,19 @@ const ProfilePage = () => {
         return state.profile.userInfo
     })
 
-    useEffect(() => {
-        dispatch(getUserProfile(userId));
-    }, [dispatch, userId])
 
-    useEffect(() =>{
+    useEffect(() => {
         dispatch(findUserLego(userId))
+        dispatch(getUserProfile(userId))
         .then(() => setIsLoading(true));
     }, [dispatch, userId])
 
+    // useEffect(() => {
+    //     dispatch(getUserProfile(userId));
+    // }, [dispatch, userId])
+
     const userSets = Object.values(lego)
-    console.log(userSets)
+    // console.log(userSets)
     const deleteLego = (id) => {
         dispatch(deleteLego(id))
             .then(closeModal)

@@ -3,7 +3,7 @@ import { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"
 import { getLegoDetails } from "../../store/lego";
-import { addToWishlist, deleteFromWishlist } from "../../store/wishlist";
+import { addToWishlist, deleteFromWishlist, getUserWishlist } from "../../store/wishlist";
 import { FaCircle } from "react-icons/fa";
 import Tags from "../Tags/Tags"
 import "./LegoDetails.css"
@@ -11,6 +11,8 @@ import "./LegoDetails.css"
 const LegoDetails = () => {
     const dispatch = useDispatch();
     const { legoId } = useParams();
+    const [isLoading, setIsLoading] = useState(false)
+    const [legoOnWishlist, setLegoOnWishlist] = useState(null)
 
 
     const sessionUser = useSelector((state) => {
@@ -21,17 +23,20 @@ const LegoDetails = () => {
         return state.lego
     })
 
-    const [isLoading, setIsLoading] = useState(false)
-    const [onWishlist, setOnWishlist] = useState(null)
+    const wishlist = useSelector((state) => {
+        console.log('STATE', state.wishlist)
+        return state.wishlist
+    })
+
+    useEffect(() =>{
+        dispatch(getUserWishlist(sessionUser.id))
+    }, [dispatch, sessionUser.id])
+
 
     useEffect(() => {
         dispatch(getLegoDetails(legoId))
         .then(() => setIsLoading(true));
-    }, [dispatch, legoId, setIsLoading, onWishlist])
-
-    useEffect(() => {
-        setOnWishlist(lego?.onWishlist);
-    }, [lego?.onWishlist])
+    }, [dispatch, legoId, setIsLoading])
 
     if (!isLoading) return <h1>Building...</h1>
 
@@ -39,16 +44,33 @@ const LegoDetails = () => {
 
     const loggedIn = sessionUser ? true : null
     const userSet = !loggedIn || !Object.values(lego).find((lego) => lego.userId === sessionUser.id)
+    const onWishlist = Object.values(wishlist).filter((wishlist) => (wishlist.legoId === lego.id))
+
+
+    const [ setDetails ] = onWishlist
+
+    // console.log("on wishlist", onWishlist)
+
+    let wishlistBtn
+
+    if (legoOnWishlist) {
+        wishlistBtn = "Remove from Wishlist"
+    } else if (onWishlist.length) {
+        wishlistBtn = "Remove from Wishlist"
+    } else {
+        wishlistBtn = "Add to Wishlist"
+    }
 
     const handleWishlist = async () => {
-        if (!onWishlist) {
-            dispatch(addToWishlist(legoId)).then(() => setOnWishlist(true));
+        if (!onWishlist.length) {
+            dispatch(addToWishlist(legoId)).then(() => setLegoOnWishlist(true));
         }
         else {
-            dispatch(deleteFromWishlist(legoId)).then(() => setOnWishlist(false));
+            dispatch(deleteFromWishlist(setDetails.id)).then(() => setLegoOnWishlist(false));
         }
     }
 
+    console.log(legoOnWishlist)
     const {
         name,
         itemNumber,
@@ -93,7 +115,7 @@ const LegoDetails = () => {
             <p className="btn">
             <button
             hidden={(!userSet) || (!loggedIn)}
-            onClick={handleWishlist} className="wishlist-btn">Add to Wishlist</button>
+            onClick={handleWishlist} className="wishlist-btn">{wishlistBtn}</button>
             </p>
             </div>
             </div>

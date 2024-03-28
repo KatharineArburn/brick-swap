@@ -14,7 +14,7 @@ const Sets = () => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const lego = useSelector((state) => {
-        console.log(state.lego)
+        // console.log(state.lego)
         return state.lego
     })
 
@@ -27,9 +27,6 @@ const Sets = () => {
         dispatch(findUserLego(userId))
         .then(() => setIsLoaded(true));
     }, [dispatch, userId])
-
-    // const userSets = Object.values(lego).filter((lego) => (lego.userId === sessionUser.id))
-    // console.log(userSets)
 
     const setGrid = Object.values(lego).map(lego => {
         return (
